@@ -1,4 +1,4 @@
-package com.google.enicholson125.meteor.data
+package com.enicholson125.meteor.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -17,7 +17,7 @@ enum class SnippetType {
     foreignKeys = [
         ForeignKey(entity = AnimalType::class, parentColumns = ["id"], childColumns = ["animal_id"])
     ],
-    indices = [Index("id")]
+    indices = [Index("id"), Index("animal_id")]
 )
 data class TextSnippet(
     @PrimaryKey @ColumnInfo(name = "id") val snippetID: String,

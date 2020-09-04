@@ -1,4 +1,4 @@
-package com.google.enicholson125.meteor.data
+package com.enicholson125.meteor.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

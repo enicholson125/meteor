@@ -1,6 +1,7 @@
 package com.enicholson125.meteor
 
 import android.os.Bundle
+import android.content.Context
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -13,12 +14,14 @@ class ScrollingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppDatabase.getInstance()
+        val database = AppDatabase.getInstance(getApplicationContext())
+        var dao = database.textSnippetDAO()
+        var text = dao.getTextSnippetByID("T1")
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(findViewById(R.id.toolbar))
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, text.toString(), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
     }
