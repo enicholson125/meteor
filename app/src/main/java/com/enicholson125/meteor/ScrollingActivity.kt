@@ -1,4 +1,4 @@
-package com.example.meteor
+package com.enicholson125.meteor
 
 import android.os.Bundle
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -7,11 +7,13 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.enicholson125.meteor.data.AppDatabase
 
 class ScrollingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppDatabase.getInstance()
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(findViewById(R.id.toolbar))
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
