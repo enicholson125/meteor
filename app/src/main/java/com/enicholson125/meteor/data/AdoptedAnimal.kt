@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
 data class AdoptedAnimal(
     @ColumnInfo(name = "animal_id") val animalTypeID: String,
 
-    @ColumnInfo(name = "animal_name") val animalName: String,
+    @ColumnInfo(name = "animal_name") val animalName: String?,
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

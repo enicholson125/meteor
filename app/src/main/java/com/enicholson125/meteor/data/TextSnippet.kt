@@ -26,10 +26,10 @@ data class TextSnippet(
 
     @ColumnInfo(name = "snippet") val snippet: String,
 
-    @ColumnInfo(name = "next_snippets") val nextSnippet: String,
+    @ColumnInfo(name = "next_snippets") val nextSnippet: String?,
 
-    @ColumnInfo(name = "choices") val choices: String,
+    @ColumnInfo(name = "choices") val choices: String?,
 
-    @ColumnInfo(name = "animal_id") val animalID: String,
+    @ColumnInfo(name = "animal_id") val animalID: String?,
 ) {
 }
