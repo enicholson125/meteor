@@ -14,10 +14,13 @@ import android.widget.TextView
 import com.enicholson125.meteor.data.AppDatabase
 import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.SnippetType
+import com.enicholson125.meteor.utilities.InjectorUtils
 import com.enicholson125.meteor.viewmodels.SnippetDetailViewModel
 
 class ScrollingActivity : AppCompatActivity() {
-    private val model: SnippetDetailViewModel by viewModels()
+    private val model: SnippetDetailViewModel by viewModels {
+        InjectorUtils.provideSnippetDetailViewModelFactory(this, "D1")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,17 +31,14 @@ class ScrollingActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.text_view)
 
         // Create the observer which updates the UI.
-        val snippetObserver = Observer<TextSnippet> { newSnippet ->
+        val snippetObserver = Observer<TextSnippet> { snippet ->
             // Update the UI, in this case, a TextView.
-            if (newSnippet.choices != null && newSnippet.choices.size > 0) {
-                textView.text = newSnippet.choices.get(0)
+            if (snippet.choices != null && snippet.choices.size > 0) {
+                textView.text = snippet.choices.get(0)
             }
         }
 
-        // TODO this should move to the repository/ViewModel
-        val database = AppDatabase.getInstance(getApplicationContext())
-        var dao = database.textSnippetDAO()
-        var liveDataText = dao.getTextSnippetByID("D1")
+        var liveDataText = model.textSnippet
         liveDataText.observe(this, snippetObserver)
 
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
