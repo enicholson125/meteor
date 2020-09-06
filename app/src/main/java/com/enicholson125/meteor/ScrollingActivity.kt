@@ -10,36 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.activity.viewModels
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
-import com.enicholson125.meteor.data.AppDatabase
-import com.enicholson125.meteor.data.TextSnippet
-import com.enicholson125.meteor.data.SnippetType
-import com.enicholson125.meteor.utilities.InjectorUtils
-import com.enicholson125.meteor.viewmodels.SnippetDetailViewModel
 
 class ScrollingActivity : AppCompatActivity() {
-    private val model: SnippetDetailViewModel by viewModels {
-        InjectorUtils.provideSnippetDetailViewModelFactory(this, "D1")
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_scrolling)
         setSupportActionBar(findViewById(R.id.toolbar))
-
-        val textView = findViewById<TextView>(R.id.text_view)
-
-        // Create the observer which updates the UI.
-        val snippetObserver = Observer<TextSnippet> { snippet ->
-            // Update the UI, in this case, a TextView.
-            if (snippet.choices != null && snippet.choices.size > 0) {
-                textView.text = snippet.choices.get(0)
-            }
-        }
-
-        var liveDataText = model.textSnippet
-        liveDataText.observe(this, snippetObserver)
 
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->

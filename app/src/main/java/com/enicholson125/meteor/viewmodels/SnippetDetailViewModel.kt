@@ -9,10 +9,15 @@ import com.enicholson125.meteor.data.SnippetType
  */
 class SnippetDetailViewModel(
     private val textSnippetRepository: TextSnippetRepository,
-    private val snippetID: String
+    private var snippetID: String
 ) : ViewModel() {
 
-    val textSnippet = textSnippetRepository.getTextSnippetByID(snippetID)
+    var textSnippet = textSnippetRepository.getTextSnippetByID(snippetID)
+
+    fun updateSnippetID(id: String) {
+        snippetID = id
+        textSnippet = textSnippetRepository.getTextSnippetByID(snippetID)
+    }
 
     //fun getNextSnippetID() String
 }
