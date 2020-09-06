@@ -22,13 +22,13 @@ enum class SnippetType {
 data class TextSnippet(
     @PrimaryKey @ColumnInfo(name = "id") val snippetID: String,
 
-    @ColumnInfo(name = "snippet_type") val snippetType: SnippetType,
+    @ColumnInfo(name = "snippet_type") val type: SnippetType,
 
-    @ColumnInfo(name = "snippet") val snippet: String,
+    @ColumnInfo(name = "snippet") val description: String,
 
-    @ColumnInfo(name = "next_snippets") val nextSnippet: String?,
+    @ColumnInfo(name = "next_snippets") val nextSnippet: List<String>?,
 
-    @ColumnInfo(name = "choices") val choices: String?,
+    @ColumnInfo(name = "choices") val choices: List<String>?,
 
     @ColumnInfo(name = "animal_id") val animalID: String?,
 ) {

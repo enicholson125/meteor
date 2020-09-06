@@ -7,34 +7,43 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.activity.viewModels
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import com.enicholson125.meteor.data.AppDatabase
 import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.SnippetType
-import com.enicholson125.meteor.utilities.getValue
+import com.enicholson125.meteor.viewmodels.SnippetDetailViewModel
 
 class ScrollingActivity : AppCompatActivity() {
-    var snippet = TextSnippet("blah", SnippetType.TEXT, "blah", "blah", "blah", "blah")
+    private val model: SnippetDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setContentView(R.layout.activity_scrolling)
+        setSupportActionBar(findViewById(R.id.toolbar))
+
+        val textView = findViewById<TextView>(R.id.text_view)
+
         // Create the observer which updates the UI.
         val snippetObserver = Observer<TextSnippet> { newSnippet ->
             // Update the UI, in this case, a TextView.
-            snippet = newSnippet
+            if (newSnippet.choices != null && newSnippet.choices.size > 0) {
+                textView.text = newSnippet.choices.get(0)
+            }
         }
 
+        // TODO this should move to the repository/ViewModel
         val database = AppDatabase.getInstance(getApplicationContext())
         var dao = database.textSnippetDAO()
-        var liveDataText = dao.getTextSnippetByID("T1")
+        var liveDataText = dao.getTextSnippetByID("D1")
         liveDataText.observe(this, snippetObserver)
-        setContentView(R.layout.activity_scrolling)
-        setSupportActionBar(findViewById(R.id.toolbar))
+
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, snippet.snippet, Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "no longer a thing", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
     }

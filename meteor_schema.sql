@@ -8,17 +8,15 @@ CREATE TABLE text_snippets(
     FOREIGN KEY (animal_id) REFERENCES animal_types(id)
 );
 
-CREATE INDEX text_snippet_index ON text_snippets (id);
-
 CREATE TABLE animal_types(
     id TEXT NOT NULL PRIMARY KEY,
     animal_name TEXT NOT NULL,
-    animal_description TEXT,
-    animal_image TEXT
+    animal_description TEXT NOT NULL,
+    animal_image TEXT NOT NULL
 );
 
 CREATE TABLE adopted_animals(
-    id TEXT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY,
     animal_id TEXT NOT NULL,
     animal_name TEXT,
     FOREIGN KEY (animal_id) REFERENCES animal_types(id)
