@@ -18,7 +18,7 @@ object InjectorUtils {
 
     fun provideSnippetDetailViewModelFactory(
         context: Context,
-        snippetID: String,
+        snippetID: String = "T1",
     ): SnippetDetailViewModelFactory {
         return SnippetDetailViewModelFactory(getTextSnippetRepository(context), snippetID)
     }
