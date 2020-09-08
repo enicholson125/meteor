@@ -5,15 +5,16 @@ import android.content.Context
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.activity.viewModels
 import android.view.Menu
 import android.view.MenuItem
 import com.enicholson125.meteor.utilities.InjectorUtils
 import com.enicholson125.meteor.viewmodels.NextSnippetViewModel
+import com.enicholson125.meteor.SnippetDetailFragment
 
-class ScrollingActivity : AppCompatActivity() {
+class ScrollingActivity : FragmentActivity() {
 
     private val model: NextSnippetViewModel by viewModels()
 
@@ -31,13 +32,19 @@ class ScrollingActivity : AppCompatActivity() {
         model.updateSnippetID("T1")
 
         setContentView(R.layout.activity_scrolling)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        // setSupportActionBar(findViewById(R.id.toolbar))
 
-        findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, nextSnippetID, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        val fragment = SnippetDetailFragment()
+        fragmentTransaction.add(R.id.fragment_container_view, fragment)
+        fragmentTransaction.commit()
+
+        // findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
+        // findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
+        //     Snackbar.make(view, nextSnippetID, Snackbar.LENGTH_LONG)
+        //             .setAction("Action", null).show()
+        // }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
