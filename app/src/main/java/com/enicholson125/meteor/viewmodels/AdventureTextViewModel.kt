@@ -29,7 +29,7 @@ class AdventureTextViewModel(
     // This is a bit of a hack, as I don't actually want a liveData
     // output from this transformation, I just want to trigger the
     // mutable data updates
-    val choicesLiveData: LiveData<List<String>> = Transformations.map(
+    val choicesLiveData: LiveData<Map<String, String>> = Transformations.map(
         textSnippetLiveData, ::updateAdventureText
     )
 
@@ -37,50 +37,27 @@ class AdventureTextViewModel(
         return textSnippetRepository.getTextSnippetByID(snippetID)
     }
 
-    fun updateAdventureText(snippet: TextSnippet): List<String> {
+    fun updateAdventureText(snippet: TextSnippet): Map<String, String> {
         adventureText = adventureText + snippet.description
         adventureTextLiveData.setValue(adventureText)
         if (snippet.nextSnippets.size == 1) {
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
-            return listOf<String>()
+            return mapOf<String, String>()
         } else {
-            return snippet.choices
+            // TODO do this with a lambda function and map
+            return mapOf<String, String>(
+                snippet.choices.get(0) to snippet.nextSnippets.get(0),
+                snippet.choices.get(1) to snippet.nextSnippets.get(1)
+            )
         }
     }
 
     fun updateSnippetID(id: String) {
-        Log.e("Blah", "!!!!!!EN!!!!!!!!!")
-        Log.e("Blah", "updateID")
         snippetIDLiveData.setValue(id)
     }
 
-    fun updateDescription(desc: String) {
-        adventureTextLiveData.setValue(desc)
+    fun appendToAdventureText(addition: String) {
+        adventureTextLiveData.setValue(adventureTextLiveData.value + addition)
     }
-
-    // private fun buildAdventureText() {
-    //     // This logic should probably be in the repository, where
-    //     // it won't be stuck in live datas
-    //     var textSnippet = textSnippetRepository.getTextSnippetByID(snippetID).getValue()
-    //     if (textSnippet == null) {
-    //         adventureText.setValue("Sorry, an error has occurred while loading the adventure.")
-    //         return
-    //     }
-    //     var adventureDescription = textSnippet.description
-    //     var nextSnippetIDs = textSnippet.nextSnippets
-    //     while (nextSnippetIDs.size == 1) {
-    //         snippetID = nextSnippetIDs.get(0)
-    //         textSnippet = textSnippetRepository.getTextSnippetByID(snippetID).getValue()
-    //         if (textSnippet == null) {
-    //             adventureDescription = adventureDescription + "\nSorry, an error has occurred."
-    //             adventureText.setValue(adventureDescription)
-    //             return
-    //         }
-    //         adventureDescription = adventureDescription + textSnippet.description
-    //         nextSnippetIDs = textSnippet.nextSnippets
-    //     }
-    //     adventureDescription = adventureDescription + textSnippet!!.description
-    //     adventureText.setValue(adventureDescription)
-    // }
 }
 

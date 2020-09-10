@@ -11,7 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.activity.viewModels
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
+import android.widget.Button
 import com.enicholson125.meteor.utilities.InjectorUtils
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModel
 import com.enicholson125.meteor.data.TextSnippet
@@ -29,9 +31,22 @@ class ScrollingActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         val textView = findViewById<TextView>(R.id.text_view)
+        val buttonList = mutableListOf<Button>()
+        buttonList.add(findViewById<Button>(R.id.button_choice_0))
+        buttonList.add(findViewById<Button>(R.id.button_choice_1))
 
-        val choicesObserver = Observer<List<String>> { choices ->
-            textView.text = model.adventureTextLiveData.value + choices.toString()
+        val choicesObserver = Observer<Map<String, String>> { choicesMap ->
+            textView.text = model.adventureTextLiveData.value
+            var index = 0
+            for ((key, value) in choicesMap) {
+                buttonList.get(index).setVisibility(View.VISIBLE)
+                buttonList.get(index).text = key
+                buttonList.get(index).setOnClickListener { _ ->
+                    // TODO add choice text to adventure text
+                    model.updateSnippetID(value)
+                }
+                index = index + 1
+            }
         }
 
         val liveDescription = model.choicesLiveData

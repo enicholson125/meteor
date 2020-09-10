@@ -8,11 +8,35 @@
     tools:context=".ScrollingActivity"
     tools:showIn="@layout/activity_scrolling">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:id="@+id/text_view"
-        android:text="@string/large_text" />
+    <LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="20dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:id="@+id/text_view"
+            android:text="@string/large_text" />
+        
+        <Button
+            android:id="@+id/button_choice_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unset"
+            android:visibility="invisible"
+            style="?android:attr/borderlessButtonStyle" />
+        
+        <Button
+            android:id="@+id/button_choice_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unset"
+            android:visibility="invisible"
+            style="?android:attr/borderlessButtonStyle" />
+    </LinearLayout>
+    
 
 </androidx.core.widget.NestedScrollView>
