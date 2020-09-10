@@ -38,7 +38,13 @@ class AdventureTextViewModel(
     }
 
     fun updateAdventureText(snippet: TextSnippet): Map<String, String> {
-        adventureText = adventureText + snippet.description
+        val escapedNewLine = """\n"""
+        val doubleNewLine = "\n\n"
+        val cleanDescription = snippet.description.replace(escapedNewLine, doubleNewLine)
+        adventureText = adventureText + cleanDescription
+        if (snippet.type == SnippetType.TEXT) {
+            adventureText = adventureText + "\n\n"
+        }
         adventureTextLiveData.setValue(adventureText)
         if (snippet.nextSnippets.size == 1) {
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
@@ -52,8 +58,10 @@ class AdventureTextViewModel(
         }
     }
 
-    fun updateSnippetID(id: String) {
-        snippetIDLiveData.setValue(id)
+    fun makeChoice(choiceText: String, snippetID: String) {
+        adventureText = adventureText + "\n\n" + choiceText.toUpperCase() + "\n\n"
+        adventureTextLiveData.setValue(adventureText)
+        snippetIDLiveData.setValue(snippetID)
     }
 
     fun appendToAdventureText(addition: String) {

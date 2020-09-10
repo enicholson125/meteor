@@ -38,12 +38,11 @@ class ScrollingActivity : AppCompatActivity() {
         val choicesObserver = Observer<Map<String, String>> { choicesMap ->
             textView.text = model.adventureTextLiveData.value
             var index = 0
-            for ((key, value) in choicesMap) {
+            for ((choiceText, snippetID) in choicesMap) {
                 buttonList.get(index).setVisibility(View.VISIBLE)
-                buttonList.get(index).text = key
+                buttonList.get(index).text = choiceText
                 buttonList.get(index).setOnClickListener { _ ->
-                    // TODO add choice text to adventure text
-                    model.updateSnippetID(value)
+                    model.makeChoice(choiceText, snippetID)
                 }
                 index = index + 1
             }
