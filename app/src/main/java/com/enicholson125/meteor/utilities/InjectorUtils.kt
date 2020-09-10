@@ -3,6 +3,7 @@ package com.enicholson125.meteor.utilities
 import android.content.Context
 import com.enicholson125.meteor.data.TextSnippetRepository
 import com.enicholson125.meteor.data.AppDatabase
+import com.enicholson125.meteor.viewmodels.AdventureTextViewModelFactory
 import com.enicholson125.meteor.viewmodels.SnippetDetailViewModelFactory
 
 /**
@@ -21,5 +22,11 @@ object InjectorUtils {
         snippetID: String = "T1",
     ): SnippetDetailViewModelFactory {
         return SnippetDetailViewModelFactory(getTextSnippetRepository(context), snippetID)
+    }
+
+    fun provideAdventureTextViewModelFactory(
+        context: Context,
+    ): AdventureTextViewModelFactory {
+        return AdventureTextViewModelFactory(getTextSnippetRepository(context))
     }
 }

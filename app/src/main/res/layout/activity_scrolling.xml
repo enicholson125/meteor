@@ -33,37 +33,7 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="vertical"
-    android:gravity="center">
-
-        <fragment 
-            android:name="com.enicholson125.meteor.SnippetDetailFragment"
-            android:id="@+id/snippet_fragment_1"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </fragment>
-    
-        <androidx.fragment.app.FragmentContainerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fragment_container_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </androidx.fragment.app.FragmentContainerView>
- 
-
- 
-    <!-- Include other widget or layout tags here. These are considered
-            "child views" or "children" of the linear layout -->
- 
-    </LinearLayout>
-
+    <include layout="@layout/content_scrolling" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

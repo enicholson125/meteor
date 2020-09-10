@@ -57,8 +57,8 @@ class SnippetDetailFragment : Fragment() {
         // Create the observer which updates the UI.
         val snippetObserver = Observer<TextSnippet> { snippet ->
             // Update the UI, in this case, a TextView.
-            if (snippet.nextSnippet != null && snippet.nextSnippet.size > 0) {
-                sharedModel.updateSnippetID(snippet.nextSnippet.get(0))
+            if (snippet.nextSnippets != null && snippet.nextSnippets.size > 0) {
+                sharedModel.updateSnippetID(snippet.nextSnippets.get(0))
             }
             textView.text = snippet.description
         }

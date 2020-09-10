@@ -2,7 +2,7 @@ CREATE TABLE text_snippets(
     id TEXT NOT NULL PRIMARY KEY,
     snippet_type TEXT NOT NULL,
     snippet TEXT NOT NULL,
-    next_snippets TEXT,
+    next_snippets TEXT NOT NULL,
     choices TEXT,
     animal_id TEXT,
     FOREIGN KEY (animal_id) REFERENCES animal_types(id)
