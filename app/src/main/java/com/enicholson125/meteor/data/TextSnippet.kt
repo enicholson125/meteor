@@ -28,7 +28,7 @@ data class TextSnippet(
 
     @ColumnInfo(name = "next_snippets") val nextSnippets: List<String>,
 
-    @ColumnInfo(name = "choices") val choices: List<String>?,
+    @ColumnInfo(name = "choices") val choices: List<String>,
 
     @ColumnInfo(name = "animal_id") val animalID: String?,
 ) {

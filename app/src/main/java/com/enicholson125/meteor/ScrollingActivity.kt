@@ -30,12 +30,12 @@ class ScrollingActivity : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.text_view)
 
-        val descriptionObserver = Observer<TextSnippet> { adventureDescription ->
-            textView.text = model.adventureTextLiveData.value
+        val choicesObserver = Observer<List<String>> { choices ->
+            textView.text = model.adventureTextLiveData.value + choices.toString()
         }
 
-        val liveDescription = model.notifierLiveData
-        liveDescription.observe(this, descriptionObserver)
+        val liveDescription = model.choicesLiveData
+        liveDescription.observe(this, choicesObserver)
 
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->

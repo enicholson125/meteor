@@ -29,7 +29,7 @@ class AdventureTextViewModel(
     // This is a bit of a hack, as I don't actually want a liveData
     // output from this transformation, I just want to trigger the
     // mutable data updates
-    val notifierLiveData: LiveData<TextSnippet> = Transformations.switchMap(
+    val choicesLiveData: LiveData<List<String>> = Transformations.map(
         textSnippetLiveData, ::updateAdventureText
     )
 
@@ -37,16 +37,14 @@ class AdventureTextViewModel(
         return textSnippetRepository.getTextSnippetByID(snippetID)
     }
 
-    fun updateAdventureText(snippet: TextSnippet): LiveData<TextSnippet> {
+    fun updateAdventureText(snippet: TextSnippet): List<String> {
         adventureText = adventureText + snippet.description
+        adventureTextLiveData.setValue(adventureText)
         if (snippet.nextSnippets.size == 1) {
-            adventureTextLiveData.setValue(adventureText)
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
-            return textSnippetRepository.getTextSnippetByID("T1")
+            return listOf<String>()
         } else {
-            adventureText = adventureText + "\nChoices here"
-            adventureTextLiveData.setValue(adventureText)
-            return textSnippetRepository.getTextSnippetByID("T1")
+            return snippet.choices
         }
     }
 
