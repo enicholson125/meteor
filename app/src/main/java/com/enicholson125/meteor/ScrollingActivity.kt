@@ -7,7 +7,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.activity.viewModels
 import android.view.Menu
@@ -15,7 +14,6 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.enicholson125.meteor.utilities.InjectorUtils
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModel
-import com.enicholson125.meteor.SnippetDetailFragment
 import com.enicholson125.meteor.data.TextSnippet
 
 class ScrollingActivity : AppCompatActivity() {
