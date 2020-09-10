@@ -11,8 +11,12 @@ class Converters {
     @TypeConverter fun stringToSnippetType(value: String): SnippetType =
         SnippetType.valueOf(value)
 
-    @TypeConverter fun colonSeparatedStringToList(value: String): List<String> =
-        value.split(":").map { it.trim() }
+    @TypeConverter fun colonSeparatedStringToList(value: String): List<String> {
+        if (value == "") {
+            return listOf<String>()
+        }
+        return value.split(":").map { it.trim() }
+    }
     @TypeConverter fun listToCommaSeparatedString(value: List<String>): String =
         value.joinToString(separator = ":")
 }

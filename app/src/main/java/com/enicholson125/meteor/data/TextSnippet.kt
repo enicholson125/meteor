@@ -10,6 +10,7 @@ enum class SnippetType {
     TEXT,
     DECISION,
     ADOPTION,
+    RESET,
 }
 
 @Entity(

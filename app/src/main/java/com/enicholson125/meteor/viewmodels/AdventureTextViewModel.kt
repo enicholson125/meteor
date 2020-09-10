@@ -17,6 +17,7 @@ class AdventureTextViewModel(
     private var snippetID: String = "T1",
     //val adventureText: MutableLiveData<String> = MutableLiveData<String>()
 ) : ViewModel() {
+    private val startID = "T1"
     var adventureText = ""
     val adventureTextLiveData: MutableLiveData<String> = MutableLiveData<String>("Default text")
 
@@ -46,9 +47,13 @@ class AdventureTextViewModel(
             adventureText = adventureText + "\n\n"
         }
         adventureTextLiveData.setValue(adventureText)
-        if (snippet.nextSnippets.size == 1) {
+        if (snippet.choices.size == 0) {
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
             return mapOf<String, String>()
+        } else if (snippet.nextSnippets.size == 1) {
+            return mapOf<String, String>(
+                snippet.choices.get(0) to snippet.nextSnippets.get(0)
+            )
         } else {
             // TODO do this with a lambda function and map
             return mapOf<String, String>(
@@ -60,6 +65,9 @@ class AdventureTextViewModel(
 
     fun makeChoice(choiceText: String, snippetID: String) {
         adventureText = adventureText + "\n\n" + choiceText.toUpperCase() + "\n\n"
+        if (snippetID == startID) {
+            adventureText = ""
+        }
         adventureTextLiveData.setValue(adventureText)
         snippetIDLiveData.setValue(snippetID)
     }

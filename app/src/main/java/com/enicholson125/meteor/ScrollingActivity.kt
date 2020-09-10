@@ -37,6 +37,9 @@ class ScrollingActivity : AppCompatActivity() {
 
         val choicesObserver = Observer<Map<String, String>> { choicesMap ->
             textView.text = model.adventureTextLiveData.value
+            if (choicesMap.size == 1) {
+                buttonList.get(1).setVisibility(View.INVISIBLE)
+            }
             var index = 0
             for ((choiceText, snippetID) in choicesMap) {
                 buttonList.get(index).setVisibility(View.VISIBLE)
