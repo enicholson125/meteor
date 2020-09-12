@@ -10,7 +10,7 @@ import com.enicholson125.meteor.utilities.DATABASE_NAME
 /**
  * The Room database for this app
  */
-@Database(entities = [TextSnippet::class, AnimalType::class, AdoptedAnimal::class, SeenText::class], version = 1, exportSchema = false)
+@Database(entities = [TextSnippet::class, AnimalType::class, AdoptedAnimal::class, TextHistory::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun textSnippetDAO(): TextSnippetDAO
@@ -30,6 +30,7 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context): AppDatabase {
             return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
                 .createFromAsset("database/seeddatabase.db")
+                .allowMainThreadQueries() // TODO REMOVE
                 .build()
         }
     }

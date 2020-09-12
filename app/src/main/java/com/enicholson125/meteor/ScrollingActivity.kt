@@ -45,7 +45,7 @@ class ScrollingActivity : AppCompatActivity() {
                 buttonList.get(index).setVisibility(View.VISIBLE)
                 buttonList.get(index).text = choiceText
                 buttonList.get(index).setOnClickListener { _ ->
-                    model.makeChoice(choiceText, snippetID)
+                    model.makeChoice(choiceText.toUpperCase(), snippetID)
                 }
                 index = index + 1
             }
@@ -58,6 +58,7 @@ class ScrollingActivity : AppCompatActivity() {
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             Snackbar.make(view, "I do nothing", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+            model.resetTextHistory()
         }
     }
 
@@ -73,7 +74,7 @@ class ScrollingActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
 
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.reset_history -> true
             else -> super.onOptionsItemSelected(item)
         }
     }

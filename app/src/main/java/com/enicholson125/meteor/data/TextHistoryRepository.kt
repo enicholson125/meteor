@@ -6,12 +6,21 @@ class TextHistoryRepository private constructor(
     private var currentIndex = getMostRecentIndex()
 
     // TODO check this is empty string when there's nothing in the DB
-    fun getTextHistory(): String =
-        textHistoryDAO.getTextHistory()
+    fun getTextHistory(): String {
+        val history = textHistoryDAO.getTextHistory()
+        if (history == "null") {
+            return ""
+        }
+        return history
+    }
 
-    // TODO I'm also expecting this to return empty string when there's nothing
-    // in the DB
-    fun getLastID(): String = textHistoryDAO.getSnippetIDByIndex(currentIndex)
+    fun getLastID(): String {
+        val lastID = textHistoryDAO.getSnippetIDByIndex(currentIndex)
+        if (lastID == null) {
+            return "T1"
+        }
+        return lastID
+    }
 
     // I'm assuming this will return 0 when the table is empty. This seems
     // like a pretty big assumption
@@ -22,8 +31,13 @@ class TextHistoryRepository private constructor(
         // Increment index even if transaction fails - the important
         // thing is the ordering by index, not that they are strictly
         // one incremented from each other
-        index = index + 1
-        textHistoryDAO.insertTextHistory(index, description, id)
+        currentIndex = currentIndex + 1
+        val textHistory = TextHistory(
+            textIndex = currentIndex,
+            textDescription = description,
+            snippetID = id,
+        )
+        textHistoryDAO.insertTextHistory(textHistory)
     }
 
     fun addHistoryBySnippet(snippet: TextSnippet) =

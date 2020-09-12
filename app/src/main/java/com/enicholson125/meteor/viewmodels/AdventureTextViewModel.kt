@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.enicholson125.meteor.data.TextSnippetRepository
+import com.enicholson125.meteor.data.TextHistoryRepository
 import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.SnippetType
 
@@ -18,10 +19,10 @@ class AdventureTextViewModel(
 ) : ViewModel() {
     private val resetID = "T1"
     private val startID: String = getStartID()
-    var adventureText = textHistoryRepository.getTextHistory()
+    var adventureText = cleanTextFromDB(textHistoryRepository.getTextHistory())
     val adventureTextLiveData: MutableLiveData<String> = MutableLiveData<String>("Default text")
 
-    val snippetIDLiveData = MutableLiveData<String>(snippetID)
+    val snippetIDLiveData = MutableLiveData<String>(startID)
 
     val textSnippetLiveData: LiveData<TextSnippet> = Transformations.switchMap(
         snippetIDLiveData, ::updateTextSnippet
@@ -32,12 +33,10 @@ class AdventureTextViewModel(
     )
 
     private fun getStartID(): String {
-        val lastID = textHistoryRepository.getLastID()
-        val lastSnippet = textSnippetRepository.getTextSnippetByID(lastID)
-        setNextSnippetIfKnown(snippet)
+        return textHistoryRepository.getLastID()
         // TODO this needs to initialise the choices as the user will
         // almost definitely have been on choices when they saved their
-        // last session
+        // last session. Currently it's going to give duplicates
     }
 
     private fun updateTextSnippet(snippetID: String): LiveData<TextSnippet> {
@@ -69,6 +68,7 @@ class AdventureTextViewModel(
     private fun setNextSnippetIfKnown(snippet: TextSnippet) {
         if (snippet.choices.size == 0) {
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
+        }
     }
 
     fun updateAdventureText(snippet: TextSnippet): Map<String, String> {
@@ -78,11 +78,12 @@ class AdventureTextViewModel(
             adventureText = adventureText + "\n\n"
         }
         adventureTextLiveData.setValue(adventureText)
+        textHistoryRepository.addHistoryBySnippet(snippet)
         setNextSnippetIfKnown(snippet)
         return getChoicesMap(snippet.choices, snippet.nextSnippets)
     }
 
-    private fun resetTextHistory() {
+    fun resetTextHistory() {
         adventureText = ""
         adventureTextLiveData.setValue(adventureText)
         snippetIDLiveData.setValue("T1")
@@ -90,11 +91,11 @@ class AdventureTextViewModel(
     }
 
     fun makeChoice(choiceText: String, snippetID: String) {
-        adventureText = adventureText + "\n\n" + choiceText.toUpperCase() + "\n\n"
+
+        adventureText = adventureText + "\n\n" + choiceText + "\n\n"
         adventureTextLiveData.setValue(adventureText)
         snippetIDLiveData.setValue(snippetID)
         textHistoryRepository.addHistoryByValue(choiceText, snippetID)
-
         if (snippetID == resetID) {
             resetTextHistory()
         }

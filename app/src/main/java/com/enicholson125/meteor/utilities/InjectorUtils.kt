@@ -17,7 +17,7 @@ object InjectorUtils {
         )
     }
 
-    private fun getTextHistoryRepository(context: Context): getTextHistoryRepository {
+    private fun getTextHistoryRepository(context: Context): TextHistoryRepository {
         return TextHistoryRepository.getInstance(
             AppDatabase.getInstance(context).textHistoryDAO()
         )

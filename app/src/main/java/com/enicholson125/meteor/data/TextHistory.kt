@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
     indices = [Index("snippet_id")],
 )
 data class TextHistory(
-    @PrimaryKey @ColumnInfo(name = "text_index") val textIndex: Long,
+    @PrimaryKey @ColumnInfo(name = "text_index") val textIndex: Int,
 
     @ColumnInfo(name = "text_description") val textDescription: String,
 

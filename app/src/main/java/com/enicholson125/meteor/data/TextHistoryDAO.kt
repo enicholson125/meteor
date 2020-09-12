@@ -12,16 +12,19 @@ import androidx.room.Transaction
  */
 @Dao
 interface TextHistoryDAO {
-    @Query("SELECT group_concat(description) FROM text_history ORDER BY index DESC")
+    @Query("SELECT group_concat(text_description, '\n\n') FROM text_history ORDER BY text_index DESC")
     fun getTextHistory(): String
 
-    @Query("SELECT snippet_id FROM text_history WHERE index = :index")
+    @Query("SELECT snippet_id FROM text_history WHERE text_index = :index")
     fun getSnippetIDByIndex(index: Int): String
 
-    @Query("SELECT MAX(index) FROM text_history")
+    @Query("SELECT MAX(text_index) FROM text_history")
     fun getMostRecentIndex(): Int
 
-    fun insertTextHistory(index: Int, description: String, id: String)
+    // TODO this should be a suspended function
+    @Insert
+    fun insertTextHistory(textHistory: TextHistory)
 
+    @Query("DELETE FROM text_history")
     fun resetTextHistory()
 }
