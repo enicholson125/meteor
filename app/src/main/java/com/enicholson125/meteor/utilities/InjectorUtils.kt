@@ -2,6 +2,7 @@ package com.enicholson125.meteor.utilities
 
 import android.content.Context
 import com.enicholson125.meteor.data.TextSnippetRepository
+import com.enicholson125.meteor.data.TextHistoryRepository
 import com.enicholson125.meteor.data.AppDatabase
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModelFactory
 
@@ -16,9 +17,18 @@ object InjectorUtils {
         )
     }
 
+    private fun getTextHistoryRepository(context: Context): getTextHistoryRepository {
+        return TextHistoryRepository.getInstance(
+            AppDatabase.getInstance(context).textHistoryDAO()
+        )
+    }
+
     fun provideAdventureTextViewModelFactory(
         context: Context,
     ): AdventureTextViewModelFactory {
-        return AdventureTextViewModelFactory(getTextSnippetRepository(context))
+        return AdventureTextViewModelFactory(
+            getTextSnippetRepository(context),
+            getTextHistoryRepository(context),
+        )
     }
 }

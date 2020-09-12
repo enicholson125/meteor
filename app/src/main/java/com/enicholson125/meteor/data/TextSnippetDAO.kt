@@ -13,5 +13,8 @@ import androidx.room.Transaction
 @Dao
 interface TextSnippetDAO {
     @Query("SELECT * FROM text_snippets WHERE id = :id")
-    fun getTextSnippetByID(id: String): LiveData<TextSnippet>
+    fun getLiveTextSnippetByID(id: String): LiveData<TextSnippet>
+
+    @Query("SELECT * FROM text_snippets WHERE id = :id")
+    fun getTextSnippetByID(id: String): TextSnippet
 }

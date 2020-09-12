@@ -14,6 +14,7 @@ import com.enicholson125.meteor.utilities.DATABASE_NAME
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun textSnippetDAO(): TextSnippetDAO
+    abstract fun textHistoryDAO(): TextHistoryDAO
 
     companion object {
 

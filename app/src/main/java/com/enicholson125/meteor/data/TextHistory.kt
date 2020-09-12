@@ -7,14 +7,16 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "seen_text",
+    tableName = "text_history",
     foreignKeys = [
         ForeignKey(entity = TextSnippet::class, parentColumns = ["id"], childColumns = ["snippet_id"])
     ],
     indices = [Index("snippet_id")],
 )
-data class SeenText(
+data class TextHistory(
     @PrimaryKey @ColumnInfo(name = "text_index") val textIndex: Long,
+
+    @ColumnInfo(name = "text_description") val textDescription: String,
 
     @ColumnInfo(name = "snippet_id") val snippetID: String,
 ) {

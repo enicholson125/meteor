@@ -22,8 +22,9 @@ CREATE TABLE adopted_animals(
     FOREIGN KEY (animal_id) REFERENCES animal_types(id)
 );
 
-CREATE TABLE seen_text(
+CREATE TABLE text_history(
     text_index INT NOT NULL PRIMARY KEY,
+    text_description TEXT NOT NULL,
     snippet_id TEXT NOT NULL,
     FOREIGN KEY (snippet_id) REFERENCES text_snippets(id)
 );

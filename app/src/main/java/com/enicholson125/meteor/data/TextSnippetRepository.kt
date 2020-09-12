@@ -6,6 +6,8 @@ class TextSnippetRepository private constructor(
 
     fun getTextSnippetByID(snippetID: String) = textSnippetDAO.getTextSnippetByID(snippetID)
 
+    fun getLiveTextSnippetByID(snippetID: String) = textSnippetDAO.getLiveTextSnippetByID(snippetID)
+
     companion object {
 
         // For Singleton instantiation
