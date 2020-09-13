@@ -67,6 +67,10 @@ class AdventureTextViewModel(
 
     private fun setNextSnippetIfKnown(snippet: TextSnippet) {
         if (snippet.choices.size == 0) {
+            // Add the history just before loading a new snippet, so
+            // that we are adding to the history at the last possible
+            // moment, as otherwise we will get duplicates
+            textHistoryRepository.addHistoryBySnippet(snippet)
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
         }
     }
@@ -74,11 +78,10 @@ class AdventureTextViewModel(
     fun updateAdventureText(snippet: TextSnippet): Map<String, String> {
         val cleanDescription = cleanTextFromDB(snippet.description)
         adventureText = adventureText + cleanDescription
-        if (snippet.type == SnippetType.TEXT) {
+        if (snippet.type != SnippetType.DECISION) {
             adventureText = adventureText + "\n\n"
         }
         adventureTextLiveData.setValue(adventureText)
-        textHistoryRepository.addHistoryBySnippet(snippet)
         setNextSnippetIfKnown(snippet)
         return getChoicesMap(snippet.choices, snippet.nextSnippets)
     }
@@ -91,11 +94,21 @@ class AdventureTextViewModel(
     }
 
     fun makeChoice(choiceText: String, snippetID: String) {
-
         adventureText = adventureText + "\n\n" + choiceText + "\n\n"
         adventureTextLiveData.setValue(adventureText)
+
+        // Add into history just before setting new ID, so that we don't
+        // get duplicate text when we load the history
+        val currentSnippet = textSnippetLiveData.value
+        if (currentSnippet != null) {
+            textHistoryRepository.addHistoryBySnippet(currentSnippet)
+        }
         snippetIDLiveData.setValue(snippetID)
+
+        // Add the choice text into history, so that the user can see
+        // what choice they selected.
         textHistoryRepository.addHistoryByValue(choiceText, snippetID)
+
         if (snippetID == resetID) {
             resetTextHistory()
         }

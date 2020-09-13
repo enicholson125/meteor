@@ -16,7 +16,7 @@ class TextHistoryRepository private constructor(
 
     fun getLastID(): String {
         val lastID = textHistoryDAO.getSnippetIDByIndex(currentIndex)
-        if (lastID == null) {
+        if (lastID == "null") {
             return "T1"
         }
         return lastID
