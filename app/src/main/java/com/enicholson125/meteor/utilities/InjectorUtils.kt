@@ -3,6 +3,7 @@ package com.enicholson125.meteor.utilities
 import android.content.Context
 import com.enicholson125.meteor.data.TextSnippetRepository
 import com.enicholson125.meteor.data.TextHistoryRepository
+import com.enicholson125.meteor.data.AnimalTypeRepository
 import com.enicholson125.meteor.data.AppDatabase
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModelFactory
 
@@ -23,12 +24,19 @@ object InjectorUtils {
         )
     }
 
+    private fun getAnimalTypeRepository(context: Context): AnimalTypeRepository {
+        return AnimalTypeRepository.getInstance(
+            AppDatabase.getInstance(context).animalTypeDAO()
+        )
+    }
+
     fun provideAdventureTextViewModelFactory(
         context: Context,
     ): AdventureTextViewModelFactory {
         return AdventureTextViewModelFactory(
             getTextSnippetRepository(context),
             getTextHistoryRepository(context),
+            getAnimalTypeRepository(context),
         )
     }
 }

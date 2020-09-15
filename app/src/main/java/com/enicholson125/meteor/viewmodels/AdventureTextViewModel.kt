@@ -8,6 +8,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.enicholson125.meteor.data.TextSnippetRepository
 import com.enicholson125.meteor.data.TextHistoryRepository
+import com.enicholson125.meteor.data.AnimalTypeRepository
 import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.SnippetType
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 class AdventureTextViewModel(
     private val textSnippetRepository: TextSnippetRepository,
     private val textHistoryRepository: TextHistoryRepository,
+    private val animalTypeRepository: AnimalTypeRepository,
 ) : ViewModel() {
     private val resetID = "R1"
     private val startID: String = getStartID()
@@ -106,7 +108,7 @@ class AdventureTextViewModel(
     }
 
     fun makeChoice(choiceText: String, snippetID: String) {
-        formattedChoiceText = "\n\n" + choiceText + "\n\n"
+        val formattedChoiceText = "\n\n" + choiceText + "\n\n"
         adventureText = adventureText + formattedChoiceText
         adventureTextLiveData.setValue(adventureText)
 
