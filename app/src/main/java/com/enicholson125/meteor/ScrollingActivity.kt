@@ -74,7 +74,10 @@ class ScrollingActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
 
         return when (item.itemId) {
-            R.id.reset_history -> true
+            R.id.reset_history -> {
+                model.resetTextHistory()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
