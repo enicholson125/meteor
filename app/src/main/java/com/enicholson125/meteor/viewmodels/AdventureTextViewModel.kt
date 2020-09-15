@@ -81,12 +81,10 @@ class AdventureTextViewModel(
         val cleanDescription = cleanTextFromDB(snippet.description)
         adventureText = adventureText + cleanDescription
         adventureTextLiveData.setValue(adventureText)
+        addHistory(snippet.description, snippet.snippetID)
         if (snippet.type == SnippetType.DECISION) {
             return getChoicesMap(snippet.choices, snippet.nextSnippets)
         } else {
-            adventureText = adventureText + "\n\n"
-            adventureTextLiveData.setValue(adventureText)
-            addHistory(snippet.description, snippet.snippetID)
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
             return mapOf<String, String>()
         }
@@ -108,20 +106,15 @@ class AdventureTextViewModel(
     }
 
     fun makeChoice(choiceText: String, snippetID: String) {
-        adventureText = adventureText + "\n\n" + choiceText + "\n\n"
+        formattedChoiceText = "\n\n" + choiceText + "\n\n"
+        adventureText = adventureText + formattedChoiceText
         adventureTextLiveData.setValue(adventureText)
 
-        // Add into history just before setting new ID, so that we don't
-        // get duplicate text when we load the history
-        val currentSnippet = textSnippetLiveData.value
-        if (currentSnippet != null) {
-            addHistory(currentSnippet.description, currentSnippet.snippetID)
-        }
         snippetIDLiveData.setValue(snippetID)
 
         // Add the choice text into history, so that the user can see
         // what choice they selected.
-        addHistory(choiceText, snippetID)
+        addHistory(formattedChoiceText, snippetID)
 
         // TODO make this check the type, not be hardcoded by ID
         if (snippetID == resetID) {

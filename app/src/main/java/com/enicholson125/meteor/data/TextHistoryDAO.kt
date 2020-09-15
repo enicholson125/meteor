@@ -12,7 +12,7 @@ import androidx.room.Transaction
  */
 @Dao
 interface TextHistoryDAO {
-    @Query("SELECT group_concat(text_description, '\n\n') FROM text_history ORDER BY text_index DESC")
+    @Query("SELECT group_concat(text_description, '') FROM text_history ORDER BY text_index DESC")
     fun getTextHistory(): String
 
     @Query("SELECT snippet_id FROM text_history WHERE text_index = :index")
