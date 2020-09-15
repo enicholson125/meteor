@@ -8,7 +8,7 @@ class TextHistoryRepository private constructor(
 
     fun getTextHistory(): String {
         val history = textHistoryDAO.getTextHistory()
-        if (history == "null") {
+        if (history == "null" || history == null) {
             return ""
         }
         return history
@@ -16,7 +16,7 @@ class TextHistoryRepository private constructor(
 
     fun getLastID(): String {
         val lastID = textHistoryDAO.getSnippetIDByIndex(currentIndex)
-        if (lastID == "null") {
+        if (lastID == "null" || lastID == null) {
             return "T1"
         }
         return lastID

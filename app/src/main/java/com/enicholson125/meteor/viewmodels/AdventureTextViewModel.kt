@@ -19,7 +19,7 @@ class AdventureTextViewModel(
     private val textSnippetRepository: TextSnippetRepository,
     private val textHistoryRepository: TextHistoryRepository,
 ) : ViewModel() {
-    private val resetID = "T1"
+    private val resetID = "R1"
     private val startID: String = getStartID()
     var adventureText = cleanTextFromDB(textHistoryRepository.getTextHistory())
     val adventureTextLiveData: MutableLiveData<String> = MutableLiveData<String>("Default text")
@@ -80,12 +80,16 @@ class AdventureTextViewModel(
     fun updateAdventureText(snippet: TextSnippet): Map<String, String> {
         val cleanDescription = cleanTextFromDB(snippet.description)
         adventureText = adventureText + cleanDescription
-        if (snippet.type != SnippetType.DECISION) {
-            adventureText = adventureText + "\n\n"
-        }
         adventureTextLiveData.setValue(adventureText)
-        setNextSnippetIfKnown(snippet)
-        return getChoicesMap(snippet.choices, snippet.nextSnippets)
+        if (snippet.type == SnippetType.DECISION) {
+            return getChoicesMap(snippet.choices, snippet.nextSnippets)
+        } else {
+            adventureText = adventureText + "\n\n"
+            adventureTextLiveData.setValue(adventureText)
+            addHistory(snippet.description, snippet.snippetID)
+            snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
+            return mapOf<String, String>()
+        }
     }
 
     fun resetTextHistory() {
@@ -119,6 +123,7 @@ class AdventureTextViewModel(
         // what choice they selected.
         addHistory(choiceText, snippetID)
 
+        // TODO make this check the type, not be hardcoded by ID
         if (snippetID == resetID) {
             resetTextHistory()
         }
