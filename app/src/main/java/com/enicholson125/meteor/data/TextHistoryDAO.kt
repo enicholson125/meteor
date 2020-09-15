@@ -21,10 +21,9 @@ interface TextHistoryDAO {
     @Query("SELECT MAX(text_index) FROM text_history")
     fun getMostRecentIndex(): Int
 
-    // TODO this should be a suspended function
     @Insert
-    fun insertTextHistory(textHistory: TextHistory)
+    suspend fun insertTextHistory(textHistory: TextHistory)
 
     @Query("DELETE FROM text_history")
-    fun resetTextHistory()
+    suspend fun resetTextHistory()
 }

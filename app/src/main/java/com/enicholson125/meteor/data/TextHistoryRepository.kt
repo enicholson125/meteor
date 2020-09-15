@@ -3,9 +3,9 @@ package com.enicholson125.meteor.data
 class TextHistoryRepository private constructor(
     private val textHistoryDAO: TextHistoryDAO
 ) {
+    // TODO index should probably be owned by the viewModel
     private var currentIndex = getMostRecentIndex()
 
-    // TODO check this is empty string when there's nothing in the DB
     fun getTextHistory(): String {
         val history = textHistoryDAO.getTextHistory()
         if (history == "null") {
@@ -27,23 +27,20 @@ class TextHistoryRepository private constructor(
     private fun getMostRecentIndex(): Int =
         textHistoryDAO.getMostRecentIndex()
 
-    fun addHistoryByValue(description: String, id: String) {
+    suspend fun addHistory(text: String, id: String) {
         // Increment index even if transaction fails - the important
         // thing is the ordering by index, not that they are strictly
         // one incremented from each other
         currentIndex = currentIndex + 1
         val textHistory = TextHistory(
             textIndex = currentIndex,
-            textDescription = description,
+            textDescription = text,
             snippetID = id,
         )
         textHistoryDAO.insertTextHistory(textHistory)
     }
 
-    fun addHistoryBySnippet(snippet: TextSnippet) =
-        addHistoryByValue(snippet.description, snippet.snippetID)
-
-    fun resetTextHistory() = textHistoryDAO.resetTextHistory()
+    suspend fun resetTextHistory() = textHistoryDAO.resetTextHistory()
 
     companion object {
 

@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
 import com.enicholson125.meteor.data.TextSnippetRepository
 import com.enicholson125.meteor.data.TextHistoryRepository
 import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.SnippetType
+import kotlinx.coroutines.launch
 
 /**
  * The ViewModel used in [ScrollingActivity].
@@ -70,7 +72,7 @@ class AdventureTextViewModel(
             // Add the history just before loading a new snippet, so
             // that we are adding to the history at the last possible
             // moment, as otherwise we will get duplicates
-            textHistoryRepository.addHistoryBySnippet(snippet)
+            addHistory(snippet.description, snippet.snippetID)
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
         }
     }
@@ -90,7 +92,15 @@ class AdventureTextViewModel(
         adventureText = ""
         adventureTextLiveData.setValue(adventureText)
         snippetIDLiveData.setValue("T1")
-        textHistoryRepository.resetTextHistory()
+        viewModelScope.launch {
+            textHistoryRepository.resetTextHistory()
+        }
+    }
+
+    fun addHistory(text: String, id: String) {
+        viewModelScope.launch{
+            textHistoryRepository.addHistory(text, id)
+        }
     }
 
     fun makeChoice(choiceText: String, snippetID: String) {
@@ -101,13 +111,13 @@ class AdventureTextViewModel(
         // get duplicate text when we load the history
         val currentSnippet = textSnippetLiveData.value
         if (currentSnippet != null) {
-            textHistoryRepository.addHistoryBySnippet(currentSnippet)
+            addHistory(currentSnippet.description, currentSnippet.snippetID)
         }
         snippetIDLiveData.setValue(snippetID)
 
         // Add the choice text into history, so that the user can see
         // what choice they selected.
-        textHistoryRepository.addHistoryByValue(choiceText, snippetID)
+        addHistory(choiceText, snippetID)
 
         if (snippetID == resetID) {
             resetTextHistory()
