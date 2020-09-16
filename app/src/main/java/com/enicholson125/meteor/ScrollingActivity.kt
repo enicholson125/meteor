@@ -58,7 +58,7 @@ class ScrollingActivity : AppCompatActivity() {
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             Snackbar.make(view, "I do nothing", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
-            model.resetTextHistory()
+            showAdoptionDialog()
         }
     }
 
@@ -80,5 +80,10 @@ class ScrollingActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun showAdoptionDialog() {
+        val newFragment = AdoptionDialogFragment("Forest Griffin")
+        newFragment.show(supportFragmentManager, "adopt")
     }
 }
