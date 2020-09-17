@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.enicholson125.meteor.data.TextSnippetRepository
 import com.enicholson125.meteor.data.TextHistoryRepository
-import com.enicholson125.meteor.data.AnimalTypeRepository
+import com.enicholson125.meteor.data.SpeciesRepository
 
 /**
  * Factory for creating a [AventureDetailViewModelt] with a constructor that
@@ -13,7 +13,7 @@ import com.enicholson125.meteor.data.AnimalTypeRepository
 class AdventureTextViewModelFactory(
     private val textSnippetRepository: TextSnippetRepository,
     private val textHistoryRepository: TextHistoryRepository,
-    private val animalTypeRepository: AnimalTypeRepository,
+    private val speciesRepository: SpeciesRepository,
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -21,7 +21,7 @@ class AdventureTextViewModelFactory(
         return AdventureTextViewModel(
             textSnippetRepository,
             textHistoryRepository,
-            animalTypeRepository,
+            speciesRepository,
         ) as T
     }
 }

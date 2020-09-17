@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "animal_types",
 )
-data class AnimalType(
+data class Species(
     @PrimaryKey @ColumnInfo(name = "id") val animalID: String,
 
     @ColumnInfo(name = "animal_name") val animalName: String,

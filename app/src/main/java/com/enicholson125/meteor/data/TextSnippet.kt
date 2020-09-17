@@ -16,7 +16,7 @@ enum class SnippetType {
 @Entity(
     tableName = "text_snippets",
     foreignKeys = [
-        ForeignKey(entity = AnimalType::class, parentColumns = ["id"], childColumns = ["animal_id"])
+        ForeignKey(entity = Species::class, parentColumns = ["id"], childColumns = ["animal_id"])
     ],
     indices = [Index("id"), Index("animal_id")]
 )

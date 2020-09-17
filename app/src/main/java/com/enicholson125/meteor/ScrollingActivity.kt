@@ -17,8 +17,11 @@ import android.widget.Button
 import com.enicholson125.meteor.utilities.InjectorUtils
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModel
 import com.enicholson125.meteor.data.TextSnippet
+import com.enicholson125.meteor.data.Species
 
 class ScrollingActivity : AppCompatActivity() {
+    var adoptionSpeciesName = "unset"
+    var adoptionSpeciesImageName = "ic_launcher_background"
 
     private val model: AdventureTextViewModel by viewModels {
         InjectorUtils.provideAdventureTextViewModelFactory(this)
@@ -54,11 +57,18 @@ class ScrollingActivity : AppCompatActivity() {
         val liveDescription = model.choicesLiveData
         liveDescription.observe(this, choicesObserver)
 
+        val speciesObserver = Observer<Species> { species ->
+            adoptionSpeciesName = species.animalName
+            adoptionSpeciesImageName = species.animalImage
+        }
+        val liveSpecies = model.adoptionSpeciesLiveData
+        liveSpecies.observe(this, speciesObserver)
+
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "I do nothing", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-            showAdoptionDialog()
+            //Snackbar.make(view, "I do nothing", Snackbar.LENGTH_LONG)
+            //        .setAction("Action", null).show()
+            showAdoptionDialog(adoptionSpeciesName, adoptionSpeciesImageName)
         }
     }
 
@@ -82,8 +92,10 @@ class ScrollingActivity : AppCompatActivity() {
         }
     }
 
-    fun showAdoptionDialog() {
-        val newFragment = AdoptionDialogFragment("Forest Griffin")
-        newFragment.show(supportFragmentManager, "adopt")
+    fun showAdoptionDialog(speciesName: String, speciesImageName: String) {
+        val id = getResources().getIdentifier(speciesImageName, "drawable", getPackageName());
+        val adoptionFragment = AdoptionDialogFragment(speciesName, id)
+        adoptionFragment.show(supportFragmentManager, "adopt")
+
     }
 }

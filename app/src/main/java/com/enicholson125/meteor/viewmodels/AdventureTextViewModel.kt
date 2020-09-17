@@ -8,9 +8,10 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.enicholson125.meteor.data.TextSnippetRepository
 import com.enicholson125.meteor.data.TextHistoryRepository
-import com.enicholson125.meteor.data.AnimalTypeRepository
+import com.enicholson125.meteor.data.SpeciesRepository
 import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.SnippetType
+import com.enicholson125.meteor.data.Species
 import kotlinx.coroutines.launch
 
 /**
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
 class AdventureTextViewModel(
     private val textSnippetRepository: TextSnippetRepository,
     private val textHistoryRepository: TextHistoryRepository,
-    private val animalTypeRepository: AnimalTypeRepository,
+    private val speciesRepository: SpeciesRepository,
 ) : ViewModel() {
     private val resetID = "R1"
     private val startID: String = getStartID()
@@ -29,11 +30,11 @@ class AdventureTextViewModel(
     val snippetIDLiveData = MutableLiveData<String>(startID)
 
     val textSnippetLiveData: LiveData<TextSnippet> = Transformations.switchMap(
-        snippetIDLiveData, ::updateTextSnippet
+        snippetIDLiveData, ::updateTextSnippet,
     )
 
     val choicesLiveData: LiveData<Map<String, String>> = Transformations.map(
-        textSnippetLiveData, ::updateAdventureText
+        textSnippetLiveData, ::updateAdventureText,
     )
 
     private fun getStartID(): String {
@@ -89,6 +90,18 @@ class AdventureTextViewModel(
         } else {
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
             return mapOf<String, String>()
+        }
+    }
+
+    val adoptionSpeciesLiveData: LiveData<Species> = Transformations.switchMap(
+        textSnippetLiveData, ::updateSpecies,
+    )
+
+    private fun updateSpecies(snippet: TextSnippet): LiveData<Species> {
+        if (snippet.animalID != null && snippet.animalID != "") {
+            return speciesRepository.getSpeciesByID(snippet.animalID)
+        } else {
+            return adoptionSpeciesLiveData
         }
     }
 

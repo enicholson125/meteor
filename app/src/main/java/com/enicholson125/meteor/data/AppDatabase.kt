@@ -10,12 +10,12 @@ import com.enicholson125.meteor.utilities.DATABASE_NAME
 /**
  * The Room database for this app
  */
-@Database(entities = [TextSnippet::class, AnimalType::class, AdoptedAnimal::class, TextHistory::class], version = 1, exportSchema = false)
+@Database(entities = [TextSnippet::class, Species::class, AdoptedAnimal::class, TextHistory::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun textSnippetDAO(): TextSnippetDAO
     abstract fun textHistoryDAO(): TextHistoryDAO
-    abstract fun animalTypeDAO(): AnimalTypeDAO
+    abstract fun speciesDAO(): SpeciesDAO
 
     companion object {
 

@@ -9,12 +9,12 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "adopted_animals",
     foreignKeys = [
-        ForeignKey(entity = AnimalType::class, parentColumns = ["id"], childColumns = ["animal_id"])
+        ForeignKey(entity = Species::class, parentColumns = ["id"], childColumns = ["animal_id"])
     ],
     indices = [Index("animal_id")],
 )
 data class AdoptedAnimal(
-    @ColumnInfo(name = "animal_id") val animalTypeID: String,
+    @ColumnInfo(name = "animal_id") val speciesID: String,
 
     @ColumnInfo(name = "animal_name") val animalName: String?,
 ) {

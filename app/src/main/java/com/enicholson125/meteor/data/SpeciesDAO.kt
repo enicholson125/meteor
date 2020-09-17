@@ -8,10 +8,10 @@ import androidx.room.Query
 import androidx.room.Transaction
 
 /**
- * The Data Access Object for the [AnimalType] class.
+ * The Data Access Object for the [Species] class.
  */
 @Dao
-interface AnimalTypeDAO {
+interface SpeciesDAO {
     @Query("SELECT * FROM animal_types WHERE id = :id")
-    fun getTypeByID(id: String): LiveData<AnimalType>
+    fun getTypeByID(id: String): LiveData<Species>
 }
