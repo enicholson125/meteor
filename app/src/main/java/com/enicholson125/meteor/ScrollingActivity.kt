@@ -39,7 +39,6 @@ class ScrollingActivity : AppCompatActivity() {
         buttonList.add(findViewById<Button>(R.id.button_choice_1))
 
         val choicesObserver = Observer<Map<String, String>> { choicesMap ->
-            textView.text = model.adventureTextLiveData.value
             if (choicesMap.size == 1) {
                 buttonList.get(1).setVisibility(View.INVISIBLE)
             }
@@ -48,14 +47,19 @@ class ScrollingActivity : AppCompatActivity() {
                 buttonList.get(index).setVisibility(View.VISIBLE)
                 buttonList.get(index).text = choiceText
                 buttonList.get(index).setOnClickListener { _ ->
-                    model.makeChoice(choiceText.toUpperCase(), snippetID)
+                    makeChoice(choiceText, snippetID)
                 }
                 index = index + 1
             }
         }
+        val liveChoices = model.choicesLiveData
+        liveChoices.observe(this, choicesObserver)
 
-        val liveDescription = model.choicesLiveData
-        liveDescription.observe(this, choicesObserver)
+        val adventureTextObserver = Observer<String> { adventureText ->
+            textView.text = adventureText
+        }
+        val liveAdventureText = model.adventureTextLiveData
+        liveAdventureText.observe(this, adventureTextObserver)
 
         val speciesObserver = Observer<Species> { species ->
             adoptionSpeciesName = species.animalName
@@ -68,7 +72,7 @@ class ScrollingActivity : AppCompatActivity() {
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             //Snackbar.make(view, "I do nothing", Snackbar.LENGTH_LONG)
             //        .setAction("Action", null).show()
-            showAdoptionDialog(adoptionSpeciesName, adoptionSpeciesImageName)
+            showAdoptionDialog()
         }
     }
 
@@ -92,9 +96,19 @@ class ScrollingActivity : AppCompatActivity() {
         }
     }
 
-    fun showAdoptionDialog(speciesName: String, speciesImageName: String) {
-        val id = getResources().getIdentifier(speciesImageName, "drawable", getPackageName());
-        val adoptionFragment = AdoptionDialogFragment(speciesName, id)
+    fun makeChoice(choiceText: String, snippetID: String) {
+        if (model.isAdoptionID(snippetID)) {
+            showAdoptionDialog()
+            return
+            // TODO make it so that the dialog is passing back info
+            // to decide whether makeChoice should be called
+        }
+        model.makeChoice(choiceText, snippetID)
+    }
+
+    fun showAdoptionDialog() {
+        val id = getResources().getIdentifier(adoptionSpeciesImageName, "drawable", getPackageName());
+        val adoptionFragment = AdoptionDialogFragment(adoptionSpeciesName, id)
         adoptionFragment.show(supportFragmentManager, "adopt")
 
     }

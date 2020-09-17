@@ -101,7 +101,8 @@ class AdventureTextViewModel(
         if (snippet.animalID != null && snippet.animalID != "") {
             return speciesRepository.getSpeciesByID(snippet.animalID)
         } else {
-            return adoptionSpeciesLiveData
+            // TODO make it so there's some sort of sensible default
+            return speciesRepository.getSpeciesByID("ForestGriffin")
         }
     }
 
@@ -121,7 +122,7 @@ class AdventureTextViewModel(
     }
 
     fun makeChoice(choiceText: String, snippetID: String) {
-        val formattedChoiceText = "\n\n" + choiceText + "\n\n"
+        val formattedChoiceText = "\n\n" + choiceText.toUpperCase() + "\n\n"
         adventureText = adventureText + formattedChoiceText
         adventureTextLiveData.setValue(adventureText)
 
@@ -139,6 +140,10 @@ class AdventureTextViewModel(
 
     fun appendToAdventureText(addition: String) {
         adventureTextLiveData.setValue(adventureTextLiveData.value + addition)
+    }
+
+    fun isAdoptionID(id: String): Boolean {
+        return id.get(0).toLowerCase() == 'a'
     }
 }
 
