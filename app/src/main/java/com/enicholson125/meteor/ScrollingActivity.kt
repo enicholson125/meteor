@@ -7,6 +7,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.activity.viewModels
 import android.view.Menu
@@ -14,12 +15,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Button
+import androidx.fragment.app.DialogFragment
 import com.enicholson125.meteor.utilities.InjectorUtils
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModel
 import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.Species
+import com.enicholson125.meteor.AdoptionDialogFragment
 
-class ScrollingActivity : AppCompatActivity() {
+class ScrollingActivity : FragmentActivity(),
+        AdoptionDialogFragment.AdoptionDialogListener {
     var adoptionSpeciesName = "unset"
     var adoptionSpeciesImageName = "ic_launcher_background"
 
@@ -31,7 +35,7 @@ class ScrollingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_scrolling)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        //setSupportActionBar(findViewById(R.id.toolbar))
 
         val textView = findViewById<TextView>(R.id.text_view)
         val buttonList = mutableListOf<Button>()
@@ -70,9 +74,8 @@ class ScrollingActivity : AppCompatActivity() {
 
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            //Snackbar.make(view, "I do nothing", Snackbar.LENGTH_LONG)
-            //        .setAction("Action", null).show()
-            showAdoptionDialog()
+            Snackbar.make(view, "I do nothing", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
         }
     }
 
@@ -98,18 +101,25 @@ class ScrollingActivity : AppCompatActivity() {
 
     fun makeChoice(choiceText: String, snippetID: String) {
         if (model.isAdoptionID(snippetID)) {
-            showAdoptionDialog()
+            // TODO probably the dialog doesn't actually need to
+            // know the choice text and snippetID and those are
+            // things that should be held onto here
+            showAdoptionDialog(snippetID)
             return
-            // TODO make it so that the dialog is passing back info
-            // to decide whether makeChoice should be called
         }
-        model.makeChoice(choiceText, snippetID)
+        model.makeChoice(choiceText.toUpperCase(), snippetID)
     }
 
-    fun showAdoptionDialog() {
+    fun showAdoptionDialog(snippetID: String) {
         val id = getResources().getIdentifier(adoptionSpeciesImageName, "drawable", getPackageName());
-        val adoptionFragment = AdoptionDialogFragment(adoptionSpeciesName, id)
+        val adoptionFragment = AdoptionDialogFragment(adoptionSpeciesName, id, snippetID)
         adoptionFragment.show(supportFragmentManager, "adopt")
-
     }
+
+    override fun onDialogAdoptionClick(dialog: AdoptionDialogFragment) {
+        // It feels kinda bad that we have to get these values
+        // from the dialog when they originated in the activity
+        model.makeChoice(dialog.getChoiceText(), dialog.getNextSnippetID())
+    }
+
 }

@@ -122,7 +122,7 @@ class AdventureTextViewModel(
     }
 
     fun makeChoice(choiceText: String, snippetID: String) {
-        val formattedChoiceText = "\n\n" + choiceText.toUpperCase() + "\n\n"
+        val formattedChoiceText = "\n\n" + choiceText + "\n\n"
         adventureText = adventureText + formattedChoiceText
         adventureTextLiveData.setValue(adventureText)
 

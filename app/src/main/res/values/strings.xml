@@ -6,4 +6,5 @@
     <string name="adopt">Adopt!</string>
     <string name="adopt_hint">Persephone Figglesworth</string>
     <string name="adopt_title">Name your %1$s</string>
+    <string name="adopt_congrats">Congratulations, you have adopted %1$s the %2$s!</string>
 </resources>
