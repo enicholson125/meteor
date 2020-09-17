@@ -121,5 +121,4 @@ class ScrollingActivity : FragmentActivity(),
         // from the dialog when they originated in the activity
         model.makeChoice(dialog.getChoiceText(), dialog.getNextSnippetID())
     }
-
 }

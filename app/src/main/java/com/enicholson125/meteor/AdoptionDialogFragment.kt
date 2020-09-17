@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment
 import android.os.Bundle
 import android.content.DialogInterface
 import android.widget.ImageView
+import android.widget.EditText
 import android.content.Context
 
 class AdoptionDialogFragment(
@@ -55,7 +56,7 @@ class AdoptionDialogFragment(
             val inflater = requireActivity().layoutInflater;
             val view = inflater.inflate(R.layout.dialog_adoption, null)
             view.findViewById<ImageView>(R.id.adoption_image)?.setImageResource(speciesImageResource)
-
+            val nameEntry = view.findViewById<EditText>(R.id.adoption_name)
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
             builder.setView(view)
@@ -63,7 +64,8 @@ class AdoptionDialogFragment(
                     // Add action buttons
                     .setPositiveButton(R.string.adopt,
                             DialogInterface.OnClickListener { dialog, id ->
-                                congratulationsText = getString(R.string.adopt_congrats, "Jared", speciesName)
+                                val name: String = nameEntry.getText().toString()
+                                congratulationsText = getString(R.string.adopt_congrats, name, speciesName)
                                 // Send the positive button event back to the host activity
                                 listener.onDialogAdoptionClick(this)
                             })
