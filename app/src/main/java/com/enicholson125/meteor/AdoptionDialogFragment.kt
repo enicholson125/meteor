@@ -64,7 +64,10 @@ class AdoptionDialogFragment(
                     // Add action buttons
                     .setPositiveButton(R.string.adopt,
                             DialogInterface.OnClickListener { dialog, id ->
-                                val name: String = nameEntry.getText().toString()
+                                var name: String = nameEntry.getText().toString()
+                                if (name == "") {
+                                    name = getString(R.string.adopt_hint)
+                                }
                                 congratulationsText = getString(R.string.adopt_congrats, name, speciesName)
                                 // Send the positive button event back to the host activity
                                 listener.onDialogAdoptionClick(this)

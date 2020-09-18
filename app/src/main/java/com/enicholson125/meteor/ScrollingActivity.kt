@@ -22,7 +22,7 @@ import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.Species
 import com.enicholson125.meteor.AdoptionDialogFragment
 
-class ScrollingActivity : FragmentActivity(),
+class ScrollingActivity : AppCompatActivity(),
         AdoptionDialogFragment.AdoptionDialogListener {
     var adoptionSpeciesName = "unset"
     var adoptionSpeciesImageName = "ic_launcher_background"
@@ -35,7 +35,7 @@ class ScrollingActivity : FragmentActivity(),
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_scrolling)
-        //setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         val textView = findViewById<TextView>(R.id.text_view)
         val buttonList = mutableListOf<Button>()
@@ -102,7 +102,7 @@ class ScrollingActivity : FragmentActivity(),
     fun makeChoice(choiceText: String, snippetID: String) {
         if (model.isAdoptionID(snippetID)) {
             // TODO probably the dialog doesn't actually need to
-            // know the choice text and snippetID and those are
+            // know the snippetID and those are
             // things that should be held onto here
             showAdoptionDialog(snippetID)
             return
