@@ -20,7 +20,7 @@
             android:layout_margin="@dimen/text_margin"
             android:layout_gravity="center_horizontal"
             android:id="@+id/animal_name"
-            android:text="@string/unset" />
+            android:text="@string/no_animals" />
     
         <ImageView
             android:id="@+id/animal_image"

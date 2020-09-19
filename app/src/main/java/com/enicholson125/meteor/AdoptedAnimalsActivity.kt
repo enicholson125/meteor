@@ -14,6 +14,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.ImageView
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.enicholson125.meteor.utilities.InjectorUtils
@@ -21,6 +22,7 @@ import com.enicholson125.meteor.viewmodels.AdventureTextViewModel
 import com.enicholson125.meteor.viewmodels.AdoptedAnimalsViewModel
 import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.Species
+import com.enicholson125.meteor.data.AdoptedAnimal
 import com.enicholson125.meteor.AdoptionDialogFragment
 
 class AdoptedAnimalsActivity : AppCompatActivity() {
@@ -31,9 +33,18 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_adventure_text)
+        setContentView(R.layout.activity_adopted_animals)
         setSupportActionBar(findViewById(R.id.toolbar))
 
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
+        val imageView = findViewById<ImageView>(R.id.animal_image)
+        val textView = findViewById<TextView>(R.id.animal_name)
+
+        val allAnimalsObserver = Observer<List<AdoptedAnimal>> { adoptedAnimals ->
+            if (adoptedAnimals.size != 0) {
+                textView.text = adoptedAnimals.get(0).animalName
+            }
+        }
+        model.allAdoptedAnimals.observe(this, allAnimalsObserver)
     }
 }

@@ -17,5 +17,7 @@ import kotlinx.coroutines.launch
 class AdoptedAnimalsViewModel(
     private val adoptedAnimalRepository: AdoptedAnimalRepository,
 ) : ViewModel() {
+
+    val allAdoptedAnimals = adoptedAnimalRepository.getAllAdoptedAnimals()
 }
 
