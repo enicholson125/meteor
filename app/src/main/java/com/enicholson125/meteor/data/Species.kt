@@ -8,12 +8,12 @@ import androidx.room.PrimaryKey
     tableName = "animal_types",
 )
 data class Species(
-    @PrimaryKey @ColumnInfo(name = "id") val animalID: String,
+    @PrimaryKey @ColumnInfo(name = "id") val id: String,
 
-    @ColumnInfo(name = "animal_name") val animalName: String,
+    @ColumnInfo(name = "animal_name") val name: String,
 
-    @ColumnInfo(name = "animal_description") val animalDescription: String,
+    @ColumnInfo(name = "animal_description") val description: String,
 
-    @ColumnInfo(name = "animal_image") val animalImage: String,
+    @ColumnInfo(name = "animal_image") val image: String,
 ) {
 }

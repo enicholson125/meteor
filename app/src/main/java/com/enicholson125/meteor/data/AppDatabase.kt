@@ -16,6 +16,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun textSnippetDAO(): TextSnippetDAO
     abstract fun textHistoryDAO(): TextHistoryDAO
     abstract fun speciesDAO(): SpeciesDAO
+    abstract fun adoptedAnimalDAO(): AdoptedAnimalDAO
 
     companion object {
 

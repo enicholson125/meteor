@@ -14,11 +14,12 @@ import androidx.room.PrimaryKey
     indices = [Index("animal_id")],
 )
 data class AdoptedAnimal(
+    @PrimaryKey()
+    @ColumnInfo(name = "id")
+    var adoptedID: String,
+
     @ColumnInfo(name = "animal_id") val speciesID: String,
 
-    @ColumnInfo(name = "animal_name") val animalName: String?,
+    @ColumnInfo(name = "animal_name") val animalName: String,
 ) {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var adoptedID: Long = 0
 }

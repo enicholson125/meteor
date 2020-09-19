@@ -18,14 +18,14 @@ import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.enicholson125.meteor.utilities.InjectorUtils
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModel
+import com.enicholson125.meteor.viewmodels.AdoptionDialogViewModel
 import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.Species
 import com.enicholson125.meteor.AdoptionDialogFragment
 
 class ScrollingActivity : AppCompatActivity(),
         AdoptionDialogFragment.AdoptionDialogListener {
-    var adoptionSpeciesName = "unset"
-    var adoptionSpeciesImageName = "ic_launcher_background"
+    var adoptionSpecies = Species("unset", "unset", "unset", "ic_launcher_background")
 
     private val model: AdventureTextViewModel by viewModels {
         InjectorUtils.provideAdventureTextViewModelFactory(this)
@@ -66,8 +66,7 @@ class ScrollingActivity : AppCompatActivity(),
         liveAdventureText.observe(this, adventureTextObserver)
 
         val speciesObserver = Observer<Species> { species ->
-            adoptionSpeciesName = species.animalName
-            adoptionSpeciesImageName = species.animalImage
+            adoptionSpecies = species
         }
         val liveSpecies = model.adoptionSpeciesLiveData
         liveSpecies.observe(this, speciesObserver)
@@ -111,8 +110,7 @@ class ScrollingActivity : AppCompatActivity(),
     }
 
     fun showAdoptionDialog(snippetID: String) {
-        val id = getResources().getIdentifier(adoptionSpeciesImageName, "drawable", getPackageName());
-        val adoptionFragment = AdoptionDialogFragment(adoptionSpeciesName, id, snippetID)
+        val adoptionFragment = AdoptionDialogFragment(adoptionSpecies, snippetID)
         adoptionFragment.show(supportFragmentManager, "adopt")
     }
 

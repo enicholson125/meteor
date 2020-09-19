@@ -4,8 +4,10 @@ import android.content.Context
 import com.enicholson125.meteor.data.TextSnippetRepository
 import com.enicholson125.meteor.data.TextHistoryRepository
 import com.enicholson125.meteor.data.SpeciesRepository
+import com.enicholson125.meteor.data.AdoptedAnimalRepository
 import com.enicholson125.meteor.data.AppDatabase
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModelFactory
+import com.enicholson125.meteor.viewmodels.AdoptionDialogViewModelFactory
 
 /**
  * Static methods used to inject classes needed for various Activities and Fragments.
@@ -30,6 +32,12 @@ object InjectorUtils {
         )
     }
 
+    private fun getAdoptedAnimalRepository(context: Context): AdoptedAnimalRepository {
+        return AdoptedAnimalRepository.getInstance(
+            AppDatabase.getInstance(context).adoptedAnimalDAO()
+        )
+    }
+
     fun provideAdventureTextViewModelFactory(
         context: Context,
     ): AdventureTextViewModelFactory {
@@ -37,6 +45,14 @@ object InjectorUtils {
             getTextSnippetRepository(context),
             getTextHistoryRepository(context),
             getSpeciesRepository(context),
+        )
+    }
+
+    fun provideAdoptionDialogViewModelFactory(
+        context: Context,
+    ): AdoptionDialogViewModelFactory {
+        return AdoptionDialogViewModelFactory(
+            getAdoptedAnimalRepository(context),
         )
     }
 }

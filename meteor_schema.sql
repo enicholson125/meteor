@@ -16,9 +16,9 @@ CREATE TABLE animal_types(
 );
 
 CREATE TABLE adopted_animals(
-    id INT NOT NULL PRIMARY KEY,
+    id TEXT NOT NULL PRIMARY KEY,
     animal_id TEXT NOT NULL,
-    animal_name TEXT,
+    animal_name TEXT NOT NULL,
     FOREIGN KEY (animal_id) REFERENCES animal_types(id)
 );
 

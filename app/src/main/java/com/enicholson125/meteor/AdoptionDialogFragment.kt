@@ -8,14 +8,20 @@ import android.content.DialogInterface
 import android.widget.ImageView
 import android.widget.EditText
 import android.content.Context
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider 
+import com.enicholson125.meteor.utilities.InjectorUtils
+import com.enicholson125.meteor.viewmodels.AdoptionDialogViewModel
+import com.enicholson125.meteor.data.Species
 
 class AdoptionDialogFragment(
-    private val speciesName: String,
-    private val speciesImageResource: Int,
+    private val species: Species,
     private val nextSnippetID: String,
 ): DialogFragment() {
+
     // Use this instance of the interface to deliver action events
     internal lateinit var listener: AdoptionDialogListener
+    private lateinit var model: AdoptionDialogViewModel
     private var congratulationsText: String = ""
 
     // These are used by the calling activity to set the next steps
@@ -27,6 +33,7 @@ class AdoptionDialogFragment(
     fun getNextSnippetID(): String {
         return nextSnippetID
     }
+
 
     /* The activity that creates an instance of this dialog fragment must
      * implement this interface in order to receive event callbacks.
@@ -47,6 +54,9 @@ class AdoptionDialogFragment(
             throw ClassCastException((context.toString() +
                     " must implement AdoptionDialogListener"))
         }
+        model = ViewModelProvider(
+            requireActivity(), InjectorUtils.provideAdoptionDialogViewModelFactory(requireActivity())
+        ).get(AdoptionDialogViewModel::class.java)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -55,12 +65,15 @@ class AdoptionDialogFragment(
             // Get the layout inflater
             val inflater = requireActivity().layoutInflater;
             val view = inflater.inflate(R.layout.dialog_adoption, null)
-            view.findViewById<ImageView>(R.id.adoption_image)?.setImageResource(speciesImageResource)
+            val imageID = getResources().getIdentifier(
+                species.image, "drawable", getActivity()!!.getPackageName()
+            )
+            view.findViewById<ImageView>(R.id.adoption_image)?.setImageResource(imageID)
             val nameEntry = view.findViewById<EditText>(R.id.adoption_name)
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
             builder.setView(view)
-                    .setTitle(getString(R.string.adopt_title, speciesName))
+                    .setTitle(getString(R.string.adopt_title, species.name))
                     // Add action buttons
                     .setPositiveButton(R.string.adopt,
                             DialogInterface.OnClickListener { dialog, id ->
@@ -68,7 +81,10 @@ class AdoptionDialogFragment(
                                 if (name == "") {
                                     name = getString(R.string.adopt_hint)
                                 }
-                                congratulationsText = getString(R.string.adopt_congrats, name, speciesName)
+                                congratulationsText = getString(
+                                    R.string.adopt_congrats, name, species.name
+                                )
+                                model.addAdoptedAnimal(name, species.id)
                                 // Send the positive button event back to the host activity
                                 listener.onDialogAdoptionClick(this)
                             })
