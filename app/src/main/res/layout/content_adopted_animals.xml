@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ScrollingActivity"
-    tools:showIn="@layout/activity_scrolling">
+    tools:context=".AdoptedAnimalsActivity"
+    tools:showIn="@layout/activity_adopted_animals">
 
     <LinearLayout 
     android:layout_width="wrap_content"
@@ -18,24 +18,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:id="@+id/text_view"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/animal_name"
             android:text="@string/unset" />
-        
-        <Button
-            android:id="@+id/button_choice_0"
+    
+        <ImageView
+            android:id="@+id/animal_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/unset"
-            android:visibility="invisible"
-            style="?android:attr/borderlessButtonStyle" />
-        
-        <Button
-            android:id="@+id/button_choice_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/unset"
-            android:visibility="invisible"
-            style="?android:attr/borderlessButtonStyle" />
+            android:src="@drawable/ic_launcher_background"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/unset" />
     </LinearLayout>
     
 

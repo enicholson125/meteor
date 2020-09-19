@@ -8,6 +8,7 @@ import com.enicholson125.meteor.data.AdoptedAnimalRepository
 import com.enicholson125.meteor.data.AppDatabase
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModelFactory
 import com.enicholson125.meteor.viewmodels.AdoptionDialogViewModelFactory
+import com.enicholson125.meteor.viewmodels.AdoptedAnimalsViewModelFactory
 
 /**
  * Static methods used to inject classes needed for various Activities and Fragments.
@@ -52,6 +53,14 @@ object InjectorUtils {
         context: Context,
     ): AdoptionDialogViewModelFactory {
         return AdoptionDialogViewModelFactory(
+            getAdoptedAnimalRepository(context),
+        )
+    }
+
+    fun provideAdoptedAnimalsViewModelFactory(
+        context: Context,
+    ): AdoptedAnimalsViewModelFactory {
+        return AdoptedAnimalsViewModelFactory(
             getAdoptedAnimalRepository(context),
         )
     }

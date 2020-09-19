@@ -3,6 +3,7 @@ package com.enicholson125.meteor
 import android.util.Log
 import android.os.Bundle
 import android.content.Context
+import android.content.Intent
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -23,7 +24,7 @@ import com.enicholson125.meteor.data.TextSnippet
 import com.enicholson125.meteor.data.Species
 import com.enicholson125.meteor.AdoptionDialogFragment
 
-class ScrollingActivity : AppCompatActivity(),
+class AdventureTextActivity : AppCompatActivity(),
         AdoptionDialogFragment.AdoptionDialogListener {
     var adoptionSpecies = Species("unset", "unset", "unset", "ic_launcher_background")
 
@@ -34,7 +35,7 @@ class ScrollingActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_scrolling)
+        setContentView(R.layout.activity_adventure_text)
         setSupportActionBar(findViewById(R.id.toolbar))
 
         val textView = findViewById<TextView>(R.id.text_view)
@@ -72,10 +73,6 @@ class ScrollingActivity : AppCompatActivity(),
         liveSpecies.observe(this, speciesObserver)
 
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "I do nothing", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -90,6 +87,10 @@ class ScrollingActivity : AppCompatActivity(),
         // as you specify a parent activity in AndroidManifest.xml.
 
         return when (item.itemId) {
+            R.id.view_animals -> {
+                startActivity(Intent(this, AdoptedAnimalsActivity::class.java))
+                true
+            }
             R.id.reset_history -> {
                 model.resetTextHistory()
                 true

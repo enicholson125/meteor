@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.EditText
 import android.content.Context
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider 
+import androidx.lifecycle.ViewModelProvider
 import com.enicholson125.meteor.utilities.InjectorUtils
 import com.enicholson125.meteor.viewmodels.AdoptionDialogViewModel
 import com.enicholson125.meteor.data.Species
@@ -70,6 +70,7 @@ class AdoptionDialogFragment(
             )
             view.findViewById<ImageView>(R.id.adoption_image)?.setImageResource(imageID)
             val nameEntry = view.findViewById<EditText>(R.id.adoption_name)
+            nameEntry.requestFocus()
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
             builder.setView(view)

@@ -15,7 +15,7 @@ import com.enicholson125.meteor.data.Species
 import kotlinx.coroutines.launch
 
 /**
- * The ViewModel used in [ScrollingActivity].
+ * The ViewModel used in [AdventureTextActivity].
  */
 class AdventureTextViewModel(
     private val textSnippetRepository: TextSnippetRepository,
