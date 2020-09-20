@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.enicholson125.meteor.data.AdoptedAnimalRepository
+import com.enicholson125.meteor.data.SpeciesRepository
 import com.enicholson125.meteor.data.AdoptedAnimal
 import com.enicholson125.meteor.data.Species
 import kotlinx.coroutines.launch
@@ -16,8 +17,11 @@ import kotlinx.coroutines.launch
  */
 class AdoptedAnimalsViewModel(
     private val adoptedAnimalRepository: AdoptedAnimalRepository,
+    private val speciesRepository: SpeciesRepository,
 ) : ViewModel() {
 
     val allAdoptedAnimals = adoptedAnimalRepository.getAllAdoptedAnimals()
+
+    val currentAnimalID = MutableLiveData<String>("Set")
 }
 

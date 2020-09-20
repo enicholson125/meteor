@@ -62,6 +62,7 @@ object InjectorUtils {
     ): AdoptedAnimalsViewModelFactory {
         return AdoptedAnimalsViewModelFactory(
             getAdoptedAnimalRepository(context),
+            getSpeciesRepository(context),
         )
     }
 }
