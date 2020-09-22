@@ -29,13 +29,6 @@ class AdoptedAnimalsViewModel(
         addSource(allAdoptedAnimals, ::updateCurrentAdoptedAnimal)
         addSource(currentAnimalIndex, ::updateCurrentAdoptedAnimal)
     }
-    // init {
-    //     currentAnimal.value = AdoptedAnimal("unset", "unset", "unset")
-    // }
-    // currentAnimal.addSource(allAdoptedAnimals, updateCurrentAdoptedAnimal::)
-    // currentAnimal.addSource(currentAnimalIndex, Observer<Int>() { value ->
-    //     currentAnimal.setValue = getAdoptedAnimalFromList(allAdoptedAnimals, currentAnimalIndex)
-    // })
 
     fun updateCurrentAdoptedAnimal(animalList: List<AdoptedAnimal>) {
         if (animalList.size > 0) {
@@ -53,44 +46,6 @@ class AdoptedAnimalsViewModel(
             updateCurrentAdoptedAnimal(animalList)
         }
     }
-
-    // fun updateCurrentAdoptedAnimal(animal: AdoptedAnimal?) {
-    //     val adoptedList = allAdoptedAnimals.value
-    //     val index = currentAnimalIndex.value
-
-    //     // Don't send a success until we have both results
-    //     if (adoptedList == null || index == null || adoptedList.size == 0) {
-    //         // TODO return better default adopted animal
-    //         currentAnimal.setValue(AdoptedAnimal("unset", "unset", "unset"))
-    //     }
-    //     currentAnimal.setValue(adoptedList.get(index % adoptedList.size))
-    // }
-
-
-    // val left = MutableLiveData<String>()
-    // val right = MutableLiveData<String>()
-    // val result = MediatorLiveData<String>().apply {
-
-    //     val plus: (String?) -> Unit = plus@{
-    //         val leftNum = left.value?.toIntOrNull()
-    //         if (leftNum == null) {
-    //             visibleResult.value = false
-    //             return@plus
-    //         }
-
-    //         val rightNum = right.value?.toIntOrNull()
-    //         if (rightNum == null) {
-    //             visibleResult.value = false
-    //             return@plus
-    //         }
-
-    //         value = (leftNum + rightNum).toString()
-    //         visibleResult.value = true
-    //     }
-
-    //     addSource(left, plus)
-    //     addSource(right, plus)
-    // }
 
     fun incrementCurrentAnimalIndex() {
         currentAnimalIndex.setValue(currentAnimalIndex.value!! + 1)
