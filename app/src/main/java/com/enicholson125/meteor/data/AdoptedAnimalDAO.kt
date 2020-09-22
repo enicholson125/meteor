@@ -15,7 +15,7 @@ interface AdoptedAnimalDAO {
     @Query("SELECT * FROM adopted_animals WHERE id = :id")
     fun getAdoptedAnimalByID(id: String): LiveData<AdoptedAnimal>
 
-    @Query("SELECT * FROM adopted_animals")
+    @Query("SELECT * FROM adopted_animals ORDER BY animal_name ASC")
     fun getAllAdoptedAnimals(): LiveData<List<AdoptedAnimal>>
 
     @Insert
