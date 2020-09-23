@@ -39,6 +39,7 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
         val imageView = findViewById<ImageView>(R.id.animal_image)
         val animalNameTextView = findViewById<TextView>(R.id.animal_name)
+        val speciesNameTextView = findViewById<TextView>(R.id.animal_species)
 
         val adoptedAnimalObserver = Observer<AdoptedAnimal> { adoptedAnimal ->
             animalNameTextView.text = adoptedAnimal.animalName
@@ -48,11 +49,16 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
         val currentAnimalSpeciesObserver = Observer<Species> { species ->
             val imageID = getResources().getIdentifier(species.image, "drawable", getPackageName())
             imageView.setImageResource(imageID)
+            speciesNameTextView.text = species.name
         }
         model.currentAnimalSpecies.observe(this, currentAnimalSpeciesObserver)
 
         val backButton = findViewById<ImageView>(R.id.back_arrow).setOnClickListener { _ ->
             model.decrementCurrentAnimalIndex()
+        }
+
+        val forwardButton = findViewById<ImageView>(R.id.forward_arrow).setOnClickListener { _ ->
+            model.incrementCurrentAnimalIndex()
         }
     }
 }

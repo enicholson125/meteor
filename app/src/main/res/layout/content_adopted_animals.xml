@@ -9,29 +9,31 @@
     tools:showIn="@layout/activity_adopted_animals">
 
     <LinearLayout 
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingTop="20dip">
 
         <ImageView 
             android:id="@+id/back_arrow"
-            android:layout_width="wrap_content" 
+            android:layout_weight="1"
+            android:layout_width="0dp" 
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_navigate_before_24"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/unset" />
+
         <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="20dip"> 
         
             <ImageView
                 android:id="@+id/animal_image"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher_background"
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@string/unset" />
 
@@ -42,11 +44,20 @@
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/animal_name"
                 android:text="@string/no_animals" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/animal_species"
+                android:text="@string/empty" />
         </LinearLayout>
 
         <ImageView 
             android:id="@+id/forward_arrow"
-            android:layout_width="wrap_content" 
+            android:layout_width="0dp"
+            android:layout_weight="1" 
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_navigate_next_24"
             android:layout_gravity="center_vertical"
