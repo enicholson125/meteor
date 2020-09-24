@@ -4,7 +4,6 @@ import android.util.Log
 import android.os.Bundle
 import android.content.Context
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
@@ -15,7 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.ImageView
-import android.widget.Button
+import android.widget.ImageButton
 import androidx.fragment.app.DialogFragment
 import com.enicholson125.meteor.utilities.InjectorUtils
 import com.enicholson125.meteor.viewmodels.AdventureTextViewModel
@@ -37,6 +36,16 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
+
+        val backButton = findViewById<ImageButton>(R.id.back_arrow)
+        backButton.setOnClickListener { _ ->
+            model.decrementCurrentAnimalIndex()
+        }
+        val forwardButton = findViewById<ImageButton>(R.id.forward_arrow)
+        forwardButton.setOnClickListener { _ ->
+            model.incrementCurrentAnimalIndex()
+        }
+
         val imageView = findViewById<ImageView>(R.id.animal_image)
         val animalNameTextView = findViewById<TextView>(R.id.animal_name)
         val speciesNameTextView = findViewById<TextView>(R.id.animal_species)
@@ -53,12 +62,20 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
         }
         model.currentAnimalSpecies.observe(this, currentAnimalSpeciesObserver)
 
-        val backButton = findViewById<ImageView>(R.id.back_arrow).setOnClickListener { _ ->
-            model.decrementCurrentAnimalIndex()
+        val adoptionsSizeObserver = Observer<Int> { size ->
+            if (size > 1) {
+                backButton.setVisibility(View.VISIBLE)
+                forwardButton.setVisibility(View.VISIBLE)
+            }
+            else if (size == 1) {
+                backButton.setVisibility(View.INVISIBLE)
+                forwardButton.setVisibility(View.INVISIBLE)
+            }
+            else {
+                backButton.setVisibility(View.GONE)
+                forwardButton.setVisibility(View.GONE)
+            }
         }
-
-        val forwardButton = findViewById<ImageView>(R.id.forward_arrow).setOnClickListener { _ ->
-            model.incrementCurrentAnimalIndex()
-        }
+        model.animalListSize.observe(this, adoptionsSizeObserver)
     }
 }

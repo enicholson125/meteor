@@ -47,6 +47,13 @@ class AdoptedAnimalsViewModel(
         }
     }
 
+    val currentAnimalSpecies: LiveData<Species> = Transformations.switchMap(
+        currentAnimal, ::getAnimalSpecies,
+    )
+
+    val animalListSize: LiveData<Int> = Transformations.map(
+        allAdoptedAnimals, { animalList -> animalList.size })
+
     fun incrementCurrentAnimalIndex() {
         currentAnimalIndex.setValue(currentAnimalIndex.value!! + 1)
     }
@@ -54,10 +61,6 @@ class AdoptedAnimalsViewModel(
     fun decrementCurrentAnimalIndex() {
         currentAnimalIndex.setValue(currentAnimalIndex.value!! - 1)
     }
-
-    val currentAnimalSpecies: LiveData<Species> = Transformations.switchMap(
-        currentAnimal, ::getAnimalSpecies,
-    )
 
     private fun getAnimalSpecies(animal: AdoptedAnimal): LiveData<Species> {
         return speciesRepository.getSpeciesByID(animal.speciesID)
