@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.enicholson125.meteor.data.AdoptedAnimalRepository
 import com.enicholson125.meteor.data.AdoptedAnimal
 import com.enicholson125.meteor.data.Species
+import com.enicholson125.meteor.utilities.GeneratorUtils
 import kotlinx.coroutines.launch
 
 /**
@@ -17,15 +18,12 @@ import kotlinx.coroutines.launch
 class AdoptionDialogViewModel(
     private val adoptedAnimalRepository: AdoptedAnimalRepository,
 ) : ViewModel() {
+    private val idLength = 10
+
     fun addAdoptedAnimal(name: String, id: String) {
         viewModelScope.launch{
-            val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-            val randomString = (1..10)
-                .map { i -> kotlin.random.Random.nextInt(0, charPool.size) }
-                .map(charPool::get)
-                .joinToString("")
             adoptedAnimalRepository.addAdoptedAnimal(
-                AdoptedAnimal(randomString, id, name)
+                AdoptedAnimal(GeneratorUtils.getRandomID(idLength), id, name)
             )
         }
     }
