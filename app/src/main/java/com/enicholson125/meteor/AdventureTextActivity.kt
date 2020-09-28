@@ -73,6 +73,10 @@ class AdventureTextActivity : AppCompatActivity(),
         liveSpecies.observe(this, speciesObserver)
 
         findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
+        
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { _ ->
+            startActivity(Intent(this, AdoptedAnimalsActivity::class.java))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

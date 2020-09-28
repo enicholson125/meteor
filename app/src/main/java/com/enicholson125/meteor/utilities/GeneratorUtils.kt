@@ -17,6 +17,7 @@ val namesList = listOf<String>(
     "Rhyndon",
     "Orlith",
     "Theseus",
+    "Ignatius",
 )
 
 val idCharPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')

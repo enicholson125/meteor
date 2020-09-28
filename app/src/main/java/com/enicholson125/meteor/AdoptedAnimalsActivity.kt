@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.content.Context
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -33,9 +34,6 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_adopted_animals)
-        setSupportActionBar(findViewById(R.id.toolbar))
-
-        findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
 
         val backButton = findViewById<ImageButton>(R.id.back_arrow)
         backButton.setOnClickListener { _ ->
@@ -77,5 +75,9 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
             }
         }
         model.animalListSize.observe(this, adoptionsSizeObserver)
+        
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { _ ->
+            this.finish()
+        }
     }
 }
