@@ -36,7 +36,6 @@ class AdventureTextActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_adventure_text)
-        setSupportActionBar(findViewById(R.id.toolbar))
 
         val textView = findViewById<TextView>(R.id.text_view)
         val buttonList = mutableListOf<Button>()
@@ -72,34 +71,8 @@ class AdventureTextActivity : AppCompatActivity(),
         val liveSpecies = model.adoptionSpeciesLiveData
         liveSpecies.observe(this, speciesObserver)
 
-        findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
-        
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { _ ->
             startActivity(Intent(this, AdoptedAnimalsActivity::class.java))
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_scrolling, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        return when (item.itemId) {
-            R.id.view_animals -> {
-                startActivity(Intent(this, AdoptedAnimalsActivity::class.java))
-                true
-            }
-            R.id.reset_history -> {
-                model.resetTextHistory()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
 

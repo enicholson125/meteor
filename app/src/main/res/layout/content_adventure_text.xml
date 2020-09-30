@@ -5,38 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/scroll_clipart"
+    android:paddingTop="100dp"
+    android:paddingBottom="110dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AdventureTextActivity"
     tools:showIn="@layout/activity_adventure_text">
 
     <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="20dip">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:id="@+id/text_view"
-            android:text="@string/unset" />
-        
-        <Button
-            android:id="@+id/button_choice_0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/unset"
-            android:visibility="invisible"
-            style="?android:attr/borderlessButtonStyle" />
-        
-        <Button
-            android:id="@+id/button_choice_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/unset"
-            android:visibility="invisible"
-            style="?android:attr/borderlessButtonStyle" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:id="@+id/text_view"
+                android:text="@string/unset" />
+            
+            <Button
+                android:id="@+id/button_choice_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unset"
+                android:visibility="invisible"
+                style="?android:attr/borderlessButtonStyle" />
+            
+            <Button
+                android:id="@+id/button_choice_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unset"
+                android:visibility="invisible"
+                style="?android:attr/borderlessButtonStyle" />
     </LinearLayout>
     
 
