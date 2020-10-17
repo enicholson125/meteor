@@ -5,6 +5,8 @@ CREATE TABLE text_snippets(
     next_snippets TEXT NOT NULL,
     choices TEXT NOT NULL,
     animal_id TEXT,
+    hidden_animal_text TEXT,
+    additional_text TEXT,
     FOREIGN KEY (animal_id) REFERENCES animal_types(id)
 );
 

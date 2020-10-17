@@ -26,6 +26,20 @@
                 android:layout_margin="@dimen/text_margin"
                 android:id="@+id/text_view"
                 android:text="@string/unset" />
+        
+            <Button
+                android:id="@+id/hidden_adoption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                style="?android:attr/borderlessButtonStyle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:visibility="gone"
+                android:id="@+id/additional_text" />
             
             <Button
                 android:id="@+id/button_choice_0"

@@ -39,6 +39,8 @@ class AdventureTextActivity : AppCompatActivity(),
         setContentView(R.layout.activity_adventure_text)
 
         val textView = findViewById<TextView>(R.id.text_view)
+        val hiddenAdoptionButton = findViewById<Button>(R.id.hidden_adoption)
+        val additionalTextView = findViewById<TextView>(R.id.additional_text)
         val nestedScroll = findViewById<NestedScrollView>(R.id.nested_scroll)
         val buttonList = mutableListOf<Button>()
         buttonList.add(findViewById<Button>(R.id.button_choice_0))
@@ -69,6 +71,30 @@ class AdventureTextActivity : AppCompatActivity(),
         }
         val liveAdventureText = model.adventureTextLiveData
         liveAdventureText.observe(this, adventureTextObserver)
+
+        val hiddenAdoptionObserver = Observer<String> { adoptionText ->
+            if (adoptionText == "") {
+                hiddenAdoptionButton.setVisibility(View.GONE)
+            } else {
+                hiddenAdoptionButton.setVisibility(View.VISIBLE)
+                hiddenAdoptionButton.text = adoptionText
+                // TODO work out how to get text snippet deets
+                // hiddenAdoptionButton.setOnClickListener { _ ->
+                //     showAdoptionDialog()
+                // }
+            }
+        }
+        model.hiddenAdoptionLiveData.observe(this, hiddenAdoptionObserver)
+
+        val additionalTextObserver = Observer<String> { additionalText ->
+            if (additionalText == "") {
+                additionalTextView.setVisibility(View.GONE)
+            } else {
+                additionalTextView.setVisibility(View.VISIBLE)
+                additionalTextView.text = additionalText
+            }
+        }
+        model.additionalTextLiveData.observe(this, additionalTextObserver)
 
         val speciesObserver = Observer<Species> { species ->
             adoptionSpecies = species

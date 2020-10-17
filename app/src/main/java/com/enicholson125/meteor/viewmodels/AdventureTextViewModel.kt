@@ -37,6 +37,14 @@ class AdventureTextViewModel(
         textSnippetLiveData, ::updateAdventureText,
     )
 
+    val hiddenAdoptionLiveData: LiveData<String> = Transformations.map(
+        textSnippetLiveData, ::updateHiddenAdoptionText,
+    )
+
+    val additionalTextLiveData: LiveData<String> = Transformations.map(
+        textSnippetLiveData, ::updateAdditionalText,
+    )
+
     private fun getStartID(): String {
         return textHistoryRepository.getLastID()
         // TODO this needs to initialise the choices as the user will
@@ -91,6 +99,20 @@ class AdventureTextViewModel(
             snippetIDLiveData.setValue(snippet.nextSnippets.get(0))
             return mapOf<String, String>()
         }
+    }
+
+    fun updateHiddenAdoptionText(snippet: TextSnippet): String {
+        if (snippet.hiddenAnimalText == null) {
+            return ""
+        }
+        return cleanTextFromDB(snippet.hiddenAnimalText)
+    }
+
+    fun updateAdditionalText(snippet: TextSnippet): String {
+        if (snippet.additionalText == null) {
+            return ""
+        }
+        return cleanTextFromDB(snippet.additionalText)
     }
 
     val adoptionSpeciesLiveData: LiveData<Species> = Transformations.switchMap(

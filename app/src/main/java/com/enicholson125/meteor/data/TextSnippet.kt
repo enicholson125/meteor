@@ -10,12 +10,10 @@ import androidx.room.PrimaryKey
 enum class SnippetType {
     // Texts always have a description, a singular nextSnippet and no choices or animalIDs
     TEXT,
-    // Decisions have no descriptions, one or more nextSnippets, the same number of choices as nextSnippets and no animalID
+    // Decisions have no descriptions, one or two nextSnippets, the same number of choices as nextSnippets and no animalID
     DECISION,
     // Adoptions have no descriptions, a singular nextSnippet, no choices and a singular animalID
     ADOPTION,
-    // Hidden adoptions have a description, a singular nextSnippet, no choices and a singular animalID
-    HIDDEN_ADOPTION,
     // Reset has no description, a singular nextSnippet and no choices or animalIDs
     RESET,
 }
@@ -39,5 +37,9 @@ data class TextSnippet(
     @ColumnInfo(name = "choices") val choices: List<String>,
 
     @ColumnInfo(name = "animal_id") val animalID: String?,
+
+    @ColumnInfo(name = "hidden_animal_text") val hiddenAnimalText: String?,
+
+    @ColumnInfo(name = "additional_text") val additionalText: String?,
 ) {
 }
