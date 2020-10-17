@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.activity.viewModels
+import androidx.core.widget.NestedScrollView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -38,6 +39,7 @@ class AdventureTextActivity : AppCompatActivity(),
         setContentView(R.layout.activity_adventure_text)
 
         val textView = findViewById<TextView>(R.id.text_view)
+        val nestedScroll = findViewById<NestedScrollView>(R.id.nested_scroll)
         val buttonList = mutableListOf<Button>()
         buttonList.add(findViewById<Button>(R.id.button_choice_0))
         buttonList.add(findViewById<Button>(R.id.button_choice_1))
@@ -61,6 +63,9 @@ class AdventureTextActivity : AppCompatActivity(),
 
         val adventureTextObserver = Observer<String> { adventureText ->
             textView.text = adventureText
+            // TODO this doesn't work because nested scroll is
+            // always null and I don't know why
+            nestedScroll?.smoothScrollTo(0, 0)
         }
         val liveAdventureText = model.adventureTextLiveData
         liveAdventureText.observe(this, adventureTextObserver)

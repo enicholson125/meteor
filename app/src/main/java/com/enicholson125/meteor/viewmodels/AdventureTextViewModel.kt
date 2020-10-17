@@ -106,7 +106,7 @@ class AdventureTextViewModel(
         }
     }
 
-    fun resetTextHistory() {
+    private fun resetTextHistory() {
         adventureText = ""
         adventureTextLiveData.setValue(adventureText)
         snippetIDLiveData.setValue("T1")

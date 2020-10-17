@@ -9,5 +9,5 @@
     <string name="adopt_congrats">CONGRATULATIONS, you have adopted %1$s the %2$s!</string>
     <string name="view_animals">View Adopted Animals</string>
     <string name="empty"></string>
-    <string name="no_animals">You have not adopted any animals yet! Perhaps you will find some on your adventures...</string>
+    <string name="no_animals">You have not found any animals yet. Keep a close eye out on your adventures...</string>
 </resources>

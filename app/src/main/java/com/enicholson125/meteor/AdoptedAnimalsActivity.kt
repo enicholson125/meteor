@@ -4,6 +4,7 @@ import android.util.Log
 import android.os.Bundle
 import android.content.Context
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
@@ -47,6 +48,7 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.animal_image)
         val animalNameTextView = findViewById<TextView>(R.id.animal_name)
         val speciesNameTextView = findViewById<TextView>(R.id.animal_species)
+        val speciesDescriptionTextView = findViewById<TextView>(R.id.animal_species_description)
 
         val adoptedAnimalObserver = Observer<AdoptedAnimal> { adoptedAnimal ->
             animalNameTextView.text = adoptedAnimal.animalName
@@ -57,6 +59,7 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
             val imageID = getResources().getIdentifier(species.image, "drawable", getPackageName())
             imageView.setImageResource(imageID)
             speciesNameTextView.text = species.name
+            speciesDescriptionTextView.text = species.description
         }
         model.currentAnimalSpecies.observe(this, currentAnimalSpeciesObserver)
 
@@ -75,7 +78,7 @@ class AdoptedAnimalsActivity : AppCompatActivity() {
             }
         }
         model.animalListSize.observe(this, adoptionsSizeObserver)
-        
+
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { _ ->
             this.finish()
         }

@@ -6,10 +6,17 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
+// TODO have snippet types be defined in code, not written in comments
 enum class SnippetType {
+    // Texts always have a description, a singular nextSnippet and no choices or animalIDs
     TEXT,
+    // Decisions have no descriptions, one or more nextSnippets, the same number of choices as nextSnippets and no animalID
     DECISION,
+    // Adoptions have no descriptions, a singular nextSnippet, no choices and a singular animalID
     ADOPTION,
+    // Hidden adoptions have a description, a singular nextSnippet, no choices and a singular animalID
+    HIDDEN_ADOPTION,
+    // Reset has no description, a singular nextSnippet and no choices or animalIDs
     RESET,
 }
 
